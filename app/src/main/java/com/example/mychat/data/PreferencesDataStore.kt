@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
+/*
+
+
 /**
  * This class manages saving and retrieving preferences from the Preferences DataStore.
  * It handles key-value pairs for Boolean login states.
@@ -39,3 +42,4 @@ class PreferencesDataStore @Inject constructor(@ApplicationContext private val c
         preferences[IS_LOGGED_IN_KEY] ?: false // Default to false if the key doesn't exist.
     }
 }
+*/

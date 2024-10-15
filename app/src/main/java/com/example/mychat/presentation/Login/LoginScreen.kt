@@ -1,5 +1,8 @@
 package com.example.mychat.presentation.Login
 
+import GoogleSignInManager
+import android.app.Activity
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,25 +18,46 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.googleauth.data.SignInResult
+import com.example.googleauth.data.rememberSignInLauncher
 import com.example.mychat.R
 import com.example.mychat.ui.theme.customColour
 import dagger.hilt.android.lifecycle.HiltViewModel
 
 
 @Composable
-fun LoginScreen(
-    loginViewModel: LoginViewModel = hiltViewModel(),
-) {
-    val isLogin = loginViewModel.isLogin.collectAsState()
+fun LoginScreen() {
+
+    val activityContext = LocalContext.current as Activity
+
+    val googleSignInManager = remember {
+        GoogleSignInManager(activityContext)
+    }
+
+    var signInResult by remember { mutableStateOf(SignInResult()) }
+
+    val launcher = rememberSignInLauncher(
+        onSignInResult = {
+            signInResult = it
+        }
+    )
+
+
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -58,14 +82,17 @@ fun LoginScreen(
                 fontWeight = FontWeight.SemiBold,
                 fontStyle = FontStyle.Italic,
                 color = Color.White,
-                text = "Welcome to My Chat ${isLogin.value}"
+                text = "Welcome to My Chat "
             )
 
             Spacer(modifier = Modifier.fillMaxHeight(0.3f))
 
             ElevatedButton(
                 onClick = {
-                    loginViewModel.saveDataInPre(true)
+                    if (launcher != null) {
+                        launcher.launch(googleSignInManager.signIn())
+
+                    }
                 },
 
                 ) {
@@ -77,7 +104,7 @@ fun LoginScreen(
                         contentDescription = null
                     )
                     Spacer(modifier = Modifier.width(5.dp))
-                    Text(text = "Login With Google")
+                    Text(text = "Login With Google ${signInResult.data?.displayName}")
                 }
             }
         }
