@@ -4,7 +4,7 @@
  val activityContext = LocalContext.current as Activity
 
     val googleSignInManager = remember {
-        GoogleSignInManager(activityContext)
+        //GoogleSignInManager(activityContext)
     }
 
     var signInResult by remember { mutableStateOf(SignInResult()) }

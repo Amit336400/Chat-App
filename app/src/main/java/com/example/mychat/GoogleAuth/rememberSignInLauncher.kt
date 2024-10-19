@@ -11,34 +11,32 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.geometry.RoundRect
+import androidx.navigation.NavHostController
+import com.example.mychat.presentation.navigation.Routs
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun rememberSignInLauncher(
+fun rememberGoogleSignInLauncher(
+    activity: Activity,
     onSignInResult: (SignInResult) -> Unit,
+    navHostController: NavHostController
 ): ManagedActivityResultLauncher<Intent, ActivityResult>? {
-    val context = LocalContext.current
-
-    // Check if the context is an Activity
-    if (context !is Activity) {
-        // You may log an error or return null based on your error handling strategy
-        return null
-    }
-
-    // Initialize GoogleSignInManager
-    val googleSignInManager = remember { GoogleSignInManager(context) }
-
-    // Update the onSignInResult state to ensure it reflects the latest value
+    // Ensure context is an Activity
+    val googleSignInManager = remember { GoogleSignInManager(activity) }
     val updatedOnSignInResult = rememberUpdatedState(onSignInResult)
 
-    // Handle the sign-in result
+    // Launcher for activity result
     return rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
     ) { result ->
-        // Handle the result using GoogleSignInManager
         googleSignInManager.handleSignInResult(result.data) { signInResult ->
-            updatedOnSignInResult.value(signInResult)
+            if (signInResult.success) {
+                navHostController.navigate(Routs.SaveUserDataRouts)
+            }else{
+                updatedOnSignInResult.value(signInResult)
+            }
+
         }
     }
 }

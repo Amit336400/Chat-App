@@ -2,7 +2,6 @@ package com.example.mychat.presentation.Login
 
 import GoogleSignInManager
 import android.app.Activity
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,7 +16,7 @@ import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,33 +30,26 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.example.googleauth.data.SignInResult
-import com.example.googleauth.data.rememberSignInLauncher
+import com.example.googleauth.data.rememberGoogleSignInLauncher
 import com.example.mychat.R
+import com.example.mychat.presentation.navigation.Routs
 import com.example.mychat.ui.theme.customColour
-import dagger.hilt.android.lifecycle.HiltViewModel
 
 
 @Composable
-fun LoginScreen() {
-
-    val activityContext = LocalContext.current as Activity
-
-    val googleSignInManager = remember {
-        GoogleSignInManager(activityContext)
-    }
+fun LoginScreen(navHostController: NavHostController) {
+    val activity = LocalContext.current as Activity
 
     var signInResult by remember { mutableStateOf(SignInResult()) }
-
-    val launcher = rememberSignInLauncher(
+    val launcher = rememberGoogleSignInLauncher(
+        activity = activity,
+        navHostController=navHostController,
         onSignInResult = {
             signInResult = it
         }
     )
-
-
-
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -89,10 +81,7 @@ fun LoginScreen() {
 
             ElevatedButton(
                 onClick = {
-                    if (launcher != null) {
-                        launcher.launch(googleSignInManager.signIn())
-
-                    }
+                    launcher?.launch(GoogleSignInManager(activity).getSignInIntent())
                 },
 
                 ) {
@@ -104,9 +93,11 @@ fun LoginScreen() {
                         contentDescription = null
                     )
                     Spacer(modifier = Modifier.width(5.dp))
-                    Text(text = "Login With Google ${signInResult.data?.displayName}")
+                    Text(text = "Login With Google ")
                 }
             }
         }
     }
 }
+
+

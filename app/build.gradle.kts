@@ -7,6 +7,8 @@ plugins {
     id("com.google.dagger.hilt.android")
     alias(libs.plugins.google.gms.google.services)
 
+    kotlin("plugin.serialization") version "2.0.0"
+
 }
 
 android {
@@ -74,6 +76,11 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+
+    // Navigation
+    val nav_version = "2.8.3"
+    api("androidx.navigation:navigation-fragment-ktx:$nav_version")
+
     //hilt
     implementation("com.google.dagger:hilt-android:2.51.1")
     kapt("com.google.dagger:hilt-android-compiler:2.51.1")
@@ -84,4 +91,8 @@ dependencies {
 
     //GoogleSignIn
     implementation ("com.google.android.gms:play-services-auth:20.5.0")
+
+    // Kotlin serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+
 }
