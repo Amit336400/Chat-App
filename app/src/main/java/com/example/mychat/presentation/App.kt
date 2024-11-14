@@ -17,7 +17,7 @@ fun App(
     saveUserDataViewModel: SaveUserDataViewModel = hiltViewModel(),
 ) {
     //saveUserDataViewModel.getLoginState()
-    val isLoagin = saveUserDataViewModel.isLogin.collectAsStateWithLifecycle()
+    val isLoagin = saveUserDataViewModel.loginSave.collectAsStateWithLifecycle()
     val auth = Firebase.auth
 
     val startingDestination = if (isLoagin.value.data) {

@@ -36,7 +36,6 @@ fun rememberGoogleSignInLauncher(
             }else{
                 updatedOnSignInResult.value(signInResult)
             }
-
         }
     }
 }

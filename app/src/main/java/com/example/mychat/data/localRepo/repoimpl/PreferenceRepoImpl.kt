@@ -1,7 +1,7 @@
-package com.example.mychat.data.repoimpl
+package com.example.mychat.data.localRepo.repoimpl
 
 import com.example.mychat.data.DB.PreferencesDataStore
-import com.example.mychat.data.repo.PreferenceRepo
+import com.example.mychat.data.localRepo.repo.PreferenceRepo
 import com.example.mychat.presentation.common.ResultState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class PreferenceRepoImpl @Inject constructor(
     private  val dataStore: PreferencesDataStore
-) : PreferenceRepo{
+) : PreferenceRepo {
     override suspend fun getLoginState(): Flow<ResultState<Boolean>> = flow {
         emit(ResultState.IsLoading)
         try {

@@ -1,6 +1,6 @@
 package com.example.mychat.domain
 
-import com.example.mychat.data.repo.PreferenceRepo
+import com.example.mychat.data.localRepo.repo.PreferenceRepo
 import com.example.mychat.presentation.common.ResultState
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

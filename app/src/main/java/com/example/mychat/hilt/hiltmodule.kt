@@ -2,8 +2,8 @@ package com.example.mychat.hilt
 
 
 import com.example.mychat.data.DB.PreferencesDataStore
-import com.example.mychat.data.repo.PreferenceRepo
-import com.example.mychat.data.repoimpl.PreferenceRepoImpl
+import com.example.mychat.data.localRepo.repo.PreferenceRepo
+import com.example.mychat.data.localRepo.repoimpl.PreferenceRepoImpl
 import com.example.mychat.domain.LoginStateUseCase
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
