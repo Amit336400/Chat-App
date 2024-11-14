@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mychat.domain.LoginStateUseCase
 import com.example.mychat.presentation.common.ResultState
-import com.example.mychat.presentation.saveUserData.GetLoginState
+import com.example.mychat.presentation.EditProfile.GetLoginState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,7 +13,6 @@ import javax.inject.Inject
 
 class SplashViewModel @Inject constructor(
     private val useCase: LoginStateUseCase,
-
     ) : ViewModel() {
 
     private val _isLogin = MutableStateFlow(GetLoginState())

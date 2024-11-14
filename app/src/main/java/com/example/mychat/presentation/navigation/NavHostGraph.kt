@@ -4,33 +4,33 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
 import com.example.mychat.presentation.Login.LoginScreen
 import com.example.mychat.presentation.home.Home
-import com.example.mychat.presentation.saveUserData.SaveUserData
+import com.example.mychat.presentation.EditProfile.SaveUserData
+import com.example.mychat.presentation.splashScreen.SplashScreen
 
 @Composable
 fun NavHostGraph(navHostController: NavHostController , startingDestination : SubNavigation) {
 
 
 
-    NavHost(navController = navHostController, startDestination = startingDestination){
+    NavHost(navController = navHostController, startDestination = Routs.SplashScreen){
 
+        composable<Routs.SplashScreen> {
+          SplashScreen(navHostController)
+        }
 
-        navigation<SubNavigation.LoginUserScreen>(startDestination = Routs.LoginScreenRout){
             composable<Routs.LoginScreenRout> {
                 LoginScreen(navHostController)
             }
-            composable<Routs.SaveUserDataRouts> {
+            composable<Routs.EditProfileRouts> {
                 SaveUserData(navHostController)
             }
-        }
 
-        navigation<SubNavigation.MainHomeScreen>(startDestination = Routs.HomeScreenRout){
             composable<Routs.HomeScreenRout> {
                 Home()
             }
-        }
+
 
     }
 

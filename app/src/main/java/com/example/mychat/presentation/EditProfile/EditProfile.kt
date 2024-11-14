@@ -1,13 +1,11 @@
-package com.example.mychat.presentation.saveUserData
+package com.example.mychat.presentation.EditProfile
 
 /**
  * this page collect User data and store in database
  * this page visible one time when user login
  */
 
-import android.widget.Toast
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -45,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.mychat.R
+import com.example.mychat.domain.model.User
 import com.example.mychat.presentation.common.CustomEditText
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
@@ -53,7 +52,7 @@ import com.google.firebase.auth.auth
 @Composable
 fun SaveUserData(
     navHostController: NavHostController,
-    viewModel: SaveUserDataViewModel = hiltViewModel(),
+    viewModel: EditProfileViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
     val auth = Firebase.auth
@@ -156,8 +155,14 @@ fun SaveUserData(
             onClick = {
                 if (name.isNotBlank()) {
                     // Using ViewModel for saving data asynchronously
-
-                    Toast.makeText(context, "Data Saved", Toast.LENGTH_SHORT).show()
+                    val user = User(
+                        id = auth.currentUser?.uid,
+                        name =  name,
+                        email = email,
+                        bio = bio,
+                        gender = selectedGender
+                    )
+                    viewModel.saveUser(user)
                 } else {
                     nameError = true
                 }

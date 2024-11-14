@@ -40,16 +40,26 @@ import com.example.mychat.ui.theme.customColour
 
 @Composable
 fun LoginScreen(navHostController: NavHostController) {
-    val activity = LocalContext.current as Activity
 
+    val activity = LocalContext.current as Activity
     var signInResult by remember { mutableStateOf(SignInResult()) }
+
+    // Google Sign-In launcher
     val launcher = rememberGoogleSignInLauncher(
         activity = activity,
-        navHostController=navHostController,
-        onSignInResult = {
-            signInResult = it
+        onSignInResult = { result ->
+            signInResult = result
         }
     )
+    LaunchedEffect (
+        key1 = signInResult.success
+    ){
+        if (signInResult.success){
+            navHostController.navigate(Routs.EditProfileRouts)
+        }
+    }
+
+
     Box(
         modifier = Modifier
             .fillMaxSize()

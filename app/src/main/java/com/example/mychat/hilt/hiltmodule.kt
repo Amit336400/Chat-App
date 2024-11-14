@@ -4,10 +4,13 @@ package com.example.mychat.hilt
 import com.example.mychat.data.DB.PreferencesDataStore
 import com.example.mychat.data.localRepo.repo.PreferenceRepo
 import com.example.mychat.data.localRepo.repoimpl.PreferenceRepoImpl
+import com.example.mychat.data.remoreRepo.UserRepo
 import com.example.mychat.domain.LoginStateUseCase
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -36,11 +39,24 @@ object AppModule {
     ) : PreferenceRepo {
         return PreferenceRepoImpl(dataStore)
     }
+    @Singleton
+    @Provides
+    fun provideUserRepo (
+        firestore: FirebaseFirestore
+    ): UserRepo {
+       return UserRepo(firestore = firestore)
+    }
 
     @Singleton
     @Provides
     fun provideAuth(): FirebaseAuth {
         return Firebase.auth
+    }
+
+    @Singleton
+    @Provides
+    fun provideFirebaseFireStore(): FirebaseFirestore {
+        return Firebase.firestore
     }
 
 

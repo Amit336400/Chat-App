@@ -1,11 +1,12 @@
-package com.example.mychat.presentation.saveUserData
+package com.example.mychat.presentation.EditProfile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
+import com.example.mychat.data.remoreRepo.UserRepo
 import com.example.mychat.domain.LoginStateUseCase
+import com.example.mychat.domain.model.User
 import com.example.mychat.presentation.common.ResultState
-import com.example.mychat.presentation.navigation.Routs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,8 +16,9 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class SaveUserDataViewModel @Inject constructor(
-private val useCase: LoginStateUseCase,
+class EditProfileViewModel @Inject constructor(
+    private val useCase: LoginStateUseCase,
+    private val userRepo: UserRepo,
 ) : ViewModel() {
 
     /**
@@ -24,11 +26,8 @@ private val useCase: LoginStateUseCase,
      * It is private to ensure that only the ViewModel can modify the value.
      */
 
-
     private val _isLoginSave = MutableStateFlow(GetLoginState())
     val loginSave= _isLoginSave.asStateFlow()
-
-
     fun saveLoginState(isLoggedIn: Boolean,navHostController: NavHostController) {
         viewModelScope.launch(Dispatchers.IO) {
             useCase.saveLoginState(isLoggedIn).collect{
@@ -53,7 +52,19 @@ private val useCase: LoginStateUseCase,
             }
         }
     }
+
+
+    fun saveUser(user: User) {
+        viewModelScope.launch(
+            Dispatchers.IO
+        ) {
+            userRepo.saveUserData(user = user)
+        }
+    }
 }
+
+
+
 
 
 data class GetLoginState(

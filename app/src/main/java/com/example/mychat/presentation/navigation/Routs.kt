@@ -20,10 +20,13 @@ class Routs {
     object LoginScreenRout
 
     @Serializable
-    object SaveUserDataRouts
+    object EditProfileRouts
 
     @Serializable
     object HomeScreenRout
+
+    @Serializable
+    object SplashScreen
 
 
 }
