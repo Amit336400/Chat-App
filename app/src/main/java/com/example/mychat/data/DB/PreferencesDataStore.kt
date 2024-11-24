@@ -1,50 +1,70 @@
 package com.example.mychat.data.DB
 
+
 import android.content.Context
-import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.preferencesDataStore
+import androidx.datastore.preferences.core.stringPreferencesKey
+import com.google.gson.Gson
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
-import javax.inject.Inject
+import java.io.File
 
-
-
-/**
- * This class manages saving and retrieving preferences from the Preferences DataStore.
- * It handles key-value pairs for Boolean login states.
- */
-class PreferencesDataStore @Inject constructor(@ApplicationContext private val context: Context) {
-
-    val Context.dataStore by preferencesDataStore(name = "LoginData")
+class DataStoreUtil(
+    private val dataStore: DataStore<Preferences>,
+    ) {
 
     companion object {
-        private val IS_LOGGED_IN_KEY = booleanPreferencesKey("is_logged_in") // Key for login state.
-    }
-
-    /**
-     * Saves the login state (true or false) into Preferences DataStore.
-     * @param isLoggedIn Boolean representing if the user is logged in.
-     */
-    suspend fun saveLoginState(isLoggedIn: Boolean ) {
-        context.dataStore.edit { preferences ->
-           preferences[IS_LOGGED_IN_KEY] = isLoggedIn
+        fun create(context: Context): DataStoreUtil {
+            val datastore = PreferenceDataStoreFactory.create {
+                File(context.filesDir, "datastore/connectingDot.preferences_pb")
+            }
+            return DataStoreUtil(
+                datastore
+            )
         }
     }
-    /**
-     * Retrieves the current login state from Preferences DataStore.
-     * @return Flow<Boolean> that emits the login state.
-     */
-    /**
-     * Retrieves the current login state from Preferences DataStore.
-     * @return Boolean representing the login state.
-     */
-    suspend fun getLoginState(): Flow<Boolean> {
-        return context.dataStore.data.map { preferences ->
-            preferences[IS_LOGGED_IN_KEY] ?: false
-        }
 
+
+    /* ----------------- * Normal get/set * ----------------- */
+
+    suspend inline fun <reified T> getData(key: String): T? {
+        val str = getSerializedData(key)
+            ?: return null
+        return Gson().fromJson(str, T::class.java)
     }
+
+    suspend inline fun <reified T> setData(key: String, value: T) {
+        setSerializedData(key, Gson().toJson(value))
+    }
+
+
+    /* ----------------- * Read-Write from DataStore * ----------------- */
+
+    @PublishedApi
+    internal suspend fun getSerializedData(key: String): String? {
+        return dataStore.data.first()[stringPreferencesKey(key)]
+    }
+
+    @PublishedApi
+    internal suspend fun setSerializedData(key: String, value: String) {
+        dataStore.edit {
+            it[stringPreferencesKey(key)] = value
+        }
+    }
+
+    suspend fun clear() {
+        dataStore.edit {
+            it.clear()
+        }
+    }
+
+    suspend fun removeKey(key: String) {
+        dataStore.edit {
+            it.remove(stringPreferencesKey(key))
+        }
+    }
+
 }

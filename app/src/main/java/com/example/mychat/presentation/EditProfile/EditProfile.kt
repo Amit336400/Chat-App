@@ -8,6 +8,7 @@ package com.example.mychat.presentation.EditProfile
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -25,6 +26,7 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.RadioButton
@@ -46,6 +48,7 @@ import androidx.navigation.NavHostController
 import com.example.mychat.R
 import com.example.mychat.domain.model.User
 import com.example.mychat.presentation.common.CustomEditText
+import com.example.mychat.presentation.navigation.Routs
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 
@@ -67,114 +70,150 @@ fun SaveUserData(
     val genderOptions = listOf("Male", "Female", "Other")
     var selectedGender by remember { mutableStateOf("") }
 
+    var isLoading by remember { mutableStateOf(false) }
 
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-            .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
-    ) {
-        // Profile image area with optimization for image loading
-        Icon(
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(
             modifier = Modifier
-                .size(100.dp)
-                .clip(CircleShape)
-                .clickable { /* Handle image upload click here */ },
-            painter = painterResource(id = R.drawable.camera_enhance_24),
-            contentDescription = "Upload Profile Image",
-            tint = Color.Gray
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Name Input
-        CustomEditText(
-            modifier = Modifier.fillMaxWidth(),
-            value = name,
-            onValueChange = { inputName ->
-                name = inputName
-                nameError = inputName.isBlank()
-            },
-            label = "Name",
-            isError = nameError,
-            maxLines = 1,
-            leadingIcon = { Icon(imageVector = Icons.Default.Person, contentDescription = null) },
-            errorMessage = "Name is required"
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Display email (disabled)
-        CustomEditText(
-            modifier = Modifier.fillMaxWidth(),
-            value = email,
-            onValueChange = { /* No-op */ },
-            label = "Email",
-            leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = null) },
-            enabled = false
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Bio Input
-        CustomEditText(
-            modifier = Modifier.fillMaxWidth(),
-            value = bio,
-            onValueChange = { inputBio ->
-                bio = inputBio
-                bioError = inputBio.isBlank()
-            },
-            label = "Bio",
-            isError = bioError,
-            maxLines = 3,
-            leadingIcon = { Icon(imageVector = Icons.Default.Edit, contentDescription = null) },
-            errorMessage = "Bio is required"
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Gender Selection
-        Text(text = "Gender")
-        Column {
-            genderOptions.forEach { gender ->
-                GenderButton(gender = gender, isSelected = selectedGender) {
-
-                    selectedGender = gender
-                }
-            }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Save Button with proper validation and ViewModel interaction
-        ElevatedButton(
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.Cyan),
-            onClick = {
-                if (name.isNotBlank()) {
-                    // Using ViewModel for saving data asynchronously
-                    val user = User(
-                        id = auth.currentUser?.uid,
-                        name =  name,
-                        email = email,
-                        bio = bio,
-                        gender = selectedGender
-                    )
-
-                    viewModel.saveUser(user) {
-                        Toast.makeText(context, "User Login Successfully  ", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                } else {
-                    nameError = true
-                }
-            }
+                .fillMaxSize()
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top
         ) {
-            Text(color = Color.White, text = "Save")
+            // Profile image area with optimization for image loading
+            Icon(
+                modifier = Modifier
+                    .size(100.dp)
+                    .clip(CircleShape)
+                    .clickable { /* Handle image upload click here */ },
+                painter = painterResource(id = R.drawable.camera_enhance_24),
+                contentDescription = "Upload Profile Image",
+                tint = Color.Gray
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Name Input
+            CustomEditText(
+                modifier = Modifier.fillMaxWidth(),
+                value = name,
+                onValueChange = { inputName ->
+                    name = inputName
+                    nameError = inputName.isBlank()
+                },
+                label = "Name",
+                isError = nameError,
+                maxLines = 1,
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Person,
+                        contentDescription = null
+                    )
+                },
+                errorMessage = "Name is required"
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Display email (disabled)
+            CustomEditText(
+                modifier = Modifier.fillMaxWidth(),
+                value = email,
+                onValueChange = { /* No-op */ },
+                label = "Email",
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Email,
+                        contentDescription = null
+                    )
+                },
+                enabled = false
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Bio Input
+            CustomEditText(
+                modifier = Modifier.fillMaxWidth(),
+                value = bio,
+                onValueChange = { inputBio ->
+                    bio = inputBio
+                    bioError = inputBio.isBlank()
+                },
+                label = "Bio",
+                isError = bioError,
+                maxLines = 3,
+                leadingIcon = { Icon(imageVector = Icons.Default.Edit, contentDescription = null) },
+                errorMessage = "Bio is required"
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Gender Selection
+            Text(text = "Gender")
+            Column {
+                genderOptions.forEach { gender ->
+                    GenderButton(gender = gender, isSelected = selectedGender) {
+
+                        selectedGender = gender
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Save Button with proper validation and ViewModel interaction
+            ElevatedButton(
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.Cyan),
+                onClick = {
+                    if (name.isNotBlank()) {
+                        isLoading = true
+                        // Using ViewModel for saving data asynchronously
+                        val user = User(
+                            id = auth.currentUser?.uid,
+                            name = name,
+                            email = email,
+                            bio = bio,
+                            gender = selectedGender
+                        )
+
+                        viewModel.saveUser(user,
+                            onError = {
+                                isLoading = false
+                                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+                            },
+                            onSuccess = {
+                                isLoading = false
+
+                                Toast.makeText(
+                                    context,
+                                    "User Login Successfully  ",
+                                    Toast.LENGTH_SHORT
+                                )
+                                    .show()
+                                navHostController.navigate(Routs.HomeScreenRout)
+                            })
+                    } else {
+                        nameError = true
+                        isLoading = false
+                    }
+
+
+                }
+            ) {
+                Text(color = Color.White, text = "Save")
+            }
+
+
         }
+        if (isLoading) {
+            CircularProgressIndicator(
+                modifier = Modifier.align(Alignment.Center)
+            )
+        }
+
     }
 
 }

@@ -96,4 +96,15 @@ dependencies {
     // Kotlin serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 
+
+    // google gson
+    implementation ("com.google.code.gson:gson:2.10.1")
+
+
+
+
+
+
+
+
 }

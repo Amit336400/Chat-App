@@ -9,24 +9,12 @@ import javax.inject.Inject
 class LoginStateUseCase @Inject constructor(
     private val preferenceRepo: PreferenceRepo
 ) {
-   suspend fun saveLoginState(isLogin : Boolean) : Flow<ResultState<String>> {
+   suspend fun saveLoginState(isLogin : Boolean)  {
        return preferenceRepo.saveLoginState(isLogin)
     }
 
     suspend fun getLoginState() : Boolean {
-        return false
-        //var tg = false;
-//      preferenceRepo.getLoginState().collect{
-//           when(it){
-//               true -> {
-//                   tg = it;
-//               }
-//               false -> {
-//                  tg = it
-//               }
-//           }
-//       }
-//        return tg;
+        return preferenceRepo.getLoginState()
 
     }
 

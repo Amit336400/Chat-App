@@ -1,7 +1,8 @@
 package com.example.mychat.hilt
 
 
-import com.example.mychat.data.DB.PreferencesDataStore
+import android.content.Context
+import com.example.mychat.data.DB.DataStoreUtil
 import com.example.mychat.data.localRepo.repo.PreferenceRepo
 import com.example.mychat.data.localRepo.repoimpl.PreferenceRepoImpl
 import com.example.mychat.data.remoteRepo.RemoteRepo
@@ -15,6 +16,7 @@ import com.google.firebase.firestore.firestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -33,12 +35,13 @@ object AppModule {
         return LoginStateUseCase(preferenceRepo)
     }
 
+
     @Singleton
     @Provides
     fun providePreferencesRepo (
-        dataStore: PreferencesDataStore
+        @ApplicationContext context: Context
     ) : PreferenceRepo {
-        return PreferenceRepoImpl(dataStore)
+        return PreferenceRepoImpl(DataStoreUtil.create(context))
     }
     @Singleton
     @Provides
@@ -59,6 +62,8 @@ object AppModule {
     fun provideFirebaseFireStore(): FirebaseFirestore {
         return Firebase.firestore
     }
+
+
 
 
 }

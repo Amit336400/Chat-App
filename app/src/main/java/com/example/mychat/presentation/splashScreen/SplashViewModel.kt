@@ -24,14 +24,13 @@ class SplashViewModel @Inject constructor(
         ) {
             val log = useCase.getLoginState()
             withContext(Dispatchers.Main) {
-                if (log) {
+                if (log){
                     navHostController.navigate(Routs.HomeScreenRout)
-                } else {
+                }
+                else{
                     navHostController.navigate(Routs.LoginScreenRout)
                 }
-
             }
-
-    }
+        }
     }
 }

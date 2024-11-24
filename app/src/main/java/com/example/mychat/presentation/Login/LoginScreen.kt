@@ -2,6 +2,7 @@ package com.example.mychat.presentation.Login
 
 import GoogleSignInManager
 import android.app.Activity
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -37,7 +39,6 @@ import com.example.googleauth.data.rememberGoogleSignInLauncher
 import com.example.mychat.R
 import com.example.mychat.presentation.navigation.Routs
 import com.example.mychat.ui.theme.customColour
-import com.google.android.gms.auth.api.Auth
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 
@@ -50,9 +51,11 @@ fun LoginScreen(
 
     val activity = LocalContext.current as Activity
     var signInResult by remember { mutableStateOf(SignInResult()) }
+    var isLoading by remember { mutableStateOf(false) }
 
     // Google Sign-In launcher
-    val launcher = rememberGoogleSignInLauncher(
+    val launcher =
+        rememberGoogleSignInLauncher(
         activity = activity,
         onSignInResult = { result ->
             signInResult = result
@@ -62,7 +65,15 @@ fun LoginScreen(
         key1 = signInResult.success
     ){
         if (signInResult.success){
-            Firebase.auth.currentUser?.email?.let { viewModel.loginBefore(it,navHostController) }
+            isLoading = false
+            Firebase.auth.currentUser?.email?.let {
+                viewModel.loginBefore(it, navHostController,
+                    onError = {
+                        isLoading = false
+                        Toast.makeText(activity, it, Toast.LENGTH_SHORT).show()
+                        navHostController.navigate(Routs.HomeScreenRout)
+                    })
+            }
         }
     }
     Box(
@@ -70,6 +81,7 @@ fun LoginScreen(
             .fillMaxSize()
             .background(customColour)
     ) {
+
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -97,6 +109,7 @@ fun LoginScreen(
             ElevatedButton(
                 onClick = {
                     launcher?.launch(GoogleSignInManager(activity).getSignInIntent())
+                    isLoading = true
                 },
 
                 ) {
@@ -112,6 +125,14 @@ fun LoginScreen(
                 }
             }
         }
+
+        if (isLoading){
+            CircularProgressIndicator(
+                modifier = Modifier.align(Alignment.Center),
+                color = Color.White
+            )
+        }
+
     }
 }
 

@@ -7,9 +7,11 @@ import com.example.mychat.data.remoteRepo.RemoteRepo
 import com.example.mychat.domain.usecase.LoginStateUseCase
 import com.example.mychat.presentation.navigation.Routs
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.Error
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,8 +25,16 @@ class LoginViewModel @Inject constructor(
      *  or Edit Screen
      */
 
-    fun loginBefore(email : String,navHostController: NavHostController){
-        viewModelScope.launch (Dispatchers.IO){
+    fun loginBefore(
+        email: String,
+        navHostController: NavHostController,
+        onError : (String) -> Unit
+    ) {
+        val exceptionHandler =
+            CoroutineExceptionHandler { _, error ->
+                error.localizedMessage?.let { onError(it) }
+            }
+        viewModelScope.launch (Dispatchers.IO + exceptionHandler){
            val user =  repo.getUserWithEmail(email)
             withContext(Dispatchers.Main){
                 if (user != null) {
@@ -40,4 +50,5 @@ class LoginViewModel @Inject constructor(
         }
 
     }
+
 }

@@ -4,6 +4,6 @@ import com.example.mychat.presentation.common.ResultState
 import kotlinx.coroutines.flow.Flow
 
 interface PreferenceRepo {
-    suspend fun getLoginState() : Flow<Boolean>
-    suspend fun saveLoginState(isLogin : Boolean) : Flow<ResultState<String>>
+    suspend fun getLoginState() : Boolean
+    suspend fun saveLoginState(isLogin : Boolean)
 }
