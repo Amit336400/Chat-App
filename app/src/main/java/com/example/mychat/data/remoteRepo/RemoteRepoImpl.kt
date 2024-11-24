@@ -34,4 +34,11 @@ class RemoteRepoImpl @Inject constructor(
             .toObjects(User::class.java)
             .firstOrNull()
     }
+
+    override suspend fun getAllUser(): List<User> {
+        return firestore.userCollection()
+            .get()
+            .await()
+            .toObjects(User::class.java)
+    }
 }

@@ -15,6 +15,7 @@ val customColour = Color(0xFF445EFF)
 
 val seconduryColour = Color(0xFF6E008A)
 val primaryColour = Color(0xFF150099)
+val lightBlue = Color(0xFF91BFF7)
 
 val SplashScreenGradient = Brush.linearGradient(
     listOf(

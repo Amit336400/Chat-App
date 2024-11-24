@@ -28,5 +28,8 @@ class Routs {
     @Serializable
     object SplashScreen
 
+    @Serializable
+    object ChatScreen
+
 
 }

@@ -4,9 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.mychat.presentation.Login.LoginScreen
-import com.example.mychat.presentation.home.Home
 import com.example.mychat.presentation.EditProfile.SaveUserData
+import com.example.mychat.presentation.Login.LoginScreen
+import com.example.mychat.presentation.chatsScreen.ChatScreen
+import com.example.mychat.presentation.home.Home
 import com.example.mychat.presentation.splashScreen.SplashScreen
 
 @Composable
@@ -30,6 +31,11 @@ fun NavHostGraph(navHostController: NavHostController) {
             composable<Routs.HomeScreenRout> {
                 Home(navHostController)
             }
+
+        composable<Routs.ChatScreen> {
+
+            ChatScreen(navHostController = navHostController)
+        }
 
 
     }
