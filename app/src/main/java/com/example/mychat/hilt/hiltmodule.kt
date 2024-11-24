@@ -4,8 +4,9 @@ package com.example.mychat.hilt
 import com.example.mychat.data.DB.PreferencesDataStore
 import com.example.mychat.data.localRepo.repo.PreferenceRepo
 import com.example.mychat.data.localRepo.repoimpl.PreferenceRepoImpl
-import com.example.mychat.data.remoreRepo.UserRepo
-import com.example.mychat.domain.LoginStateUseCase
+import com.example.mychat.data.remoteRepo.RemoteRepo
+import com.example.mychat.data.remoteRepo.RemoteRepoImpl
+import com.example.mychat.domain.usecase.LoginStateUseCase
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -41,10 +42,10 @@ object AppModule {
     }
     @Singleton
     @Provides
-    fun provideUserRepo (
-        firestore: FirebaseFirestore
-    ): UserRepo {
-       return UserRepo(firestore = firestore)
+    fun provideUserRepo(
+        firestore: FirebaseFirestore,
+    ): RemoteRepo {
+        return RemoteRepoImpl(firestore = firestore)
     }
 
     @Singleton

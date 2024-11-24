@@ -10,20 +10,11 @@ import javax.inject.Inject
 class PreferenceRepoImpl @Inject constructor(
     private  val dataStore: PreferencesDataStore
 ) : PreferenceRepo {
-    override suspend fun getLoginState(): Flow<ResultState<Boolean>> = flow {
-        emit(ResultState.IsLoading)
-        try {
-             dataStore.getLoginState().collect{
-                 emit(ResultState.Success(data = it))
-
-             }
+    override suspend fun getLoginState(): Flow<Boolean> {
+        return dataStore.getLoginState() // Collect the first emitted value
 
         }
-        catch (e: Exception){
-            emit(ResultState.Error(error = e.localizedMessage))
-        }
 
-    }
 
     override suspend fun saveLoginState(isLogin: Boolean): Flow<ResultState<String>> =
         flow {

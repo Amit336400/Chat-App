@@ -8,13 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
-import javax.inject.Inject
 
 @Composable
-fun Home(viewModel: HomeViewModel = hiltViewModel()) {
+fun Home(navHostController: NavHostController) {
 
     val currentUser = Firebase.auth
 

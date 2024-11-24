@@ -30,16 +30,23 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.googleauth.data.SignInResult
 import com.example.googleauth.data.rememberGoogleSignInLauncher
 import com.example.mychat.R
 import com.example.mychat.presentation.navigation.Routs
 import com.example.mychat.ui.theme.customColour
+import com.google.android.gms.auth.api.Auth
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 
 
 @Composable
-fun LoginScreen(navHostController: NavHostController) {
+fun LoginScreen(
+    navHostController: NavHostController,
+    viewModel: LoginViewModel = hiltViewModel(),
+) {
 
     val activity = LocalContext.current as Activity
     var signInResult by remember { mutableStateOf(SignInResult()) }
@@ -55,11 +62,9 @@ fun LoginScreen(navHostController: NavHostController) {
         key1 = signInResult.success
     ){
         if (signInResult.success){
-            navHostController.navigate(Routs.EditProfileRouts)
+            Firebase.auth.currentUser?.email?.let { viewModel.loginBefore(it,navHostController) }
         }
     }
-
-
     Box(
         modifier = Modifier
             .fillMaxSize()

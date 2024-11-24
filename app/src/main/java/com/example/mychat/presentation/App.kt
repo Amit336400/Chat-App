@@ -20,26 +20,8 @@ fun App(
 
 
     //saveUserDataViewModel.getLoginState()
-    val isLoagin = saveUserDataViewModel.loginSave.collectAsStateWithLifecycle()
     val auth = Firebase.auth
 
-    val startingDestination = if (isLoagin.value.data) {
 
-        SubNavigation.MainHomeScreen
-
-    } else {
-        SubNavigation.LoginUserScreen
-    }
-      /*
-
-    Scaffold {
-        it
-
-    }
-*/
-    NavHostGraph(
-        navHostController = navHostController,
-        startingDestination = startingDestination
-    )
 
 }

@@ -5,6 +5,7 @@ package com.example.mychat.presentation.EditProfile
  * this page visible one time when user login
  */
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -60,7 +61,7 @@ fun SaveUserData(
     // Using ViewModel to manage states properly
     var name by remember { mutableStateOf("${auth.currentUser?.displayName}") }
     var email by remember { mutableStateOf("${auth.currentUser?.email}") }
-    var bio by remember { mutableStateOf("") }
+    var bio by remember { mutableStateOf("hi") }
     var nameError by remember { mutableStateOf(false) }
     var bioError by remember { mutableStateOf(false) }
     val genderOptions = listOf("Male", "Female", "Other")
@@ -162,7 +163,11 @@ fun SaveUserData(
                         bio = bio,
                         gender = selectedGender
                     )
-                    viewModel.saveUser(user)
+
+                    viewModel.saveUser(user) {
+                        Toast.makeText(context, "User Login Successfully  ", Toast.LENGTH_SHORT)
+                            .show()
+                    }
                 } else {
                     nameError = true
                 }

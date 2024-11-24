@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -36,7 +37,14 @@ class PreferencesDataStore @Inject constructor(@ApplicationContext private val c
      * Retrieves the current login state from Preferences DataStore.
      * @return Flow<Boolean> that emits the login state.
      */
-    fun getLoginState(): Flow<Boolean> = context.dataStore.data.map { preferences ->
-        preferences[IS_LOGGED_IN_KEY] ?: false // Default to false if the key doesn't exist.
+    /**
+     * Retrieves the current login state from Preferences DataStore.
+     * @return Boolean representing the login state.
+     */
+    suspend fun getLoginState(): Flow<Boolean> {
+        return context.dataStore.data.map { preferences ->
+            preferences[IS_LOGGED_IN_KEY] ?: false
+        }
+
     }
 }

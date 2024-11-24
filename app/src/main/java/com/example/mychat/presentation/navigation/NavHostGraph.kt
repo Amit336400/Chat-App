@@ -10,7 +10,7 @@ import com.example.mychat.presentation.EditProfile.SaveUserData
 import com.example.mychat.presentation.splashScreen.SplashScreen
 
 @Composable
-fun NavHostGraph(navHostController: NavHostController , startingDestination : SubNavigation) {
+fun NavHostGraph(navHostController: NavHostController) {
 
 
 
@@ -28,7 +28,7 @@ fun NavHostGraph(navHostController: NavHostController , startingDestination : Su
             }
 
             composable<Routs.HomeScreenRout> {
-                Home()
+                Home(navHostController)
             }
 
 
