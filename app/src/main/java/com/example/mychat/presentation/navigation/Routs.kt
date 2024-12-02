@@ -4,17 +4,8 @@ import kotlinx.serialization.Serializable
 import javax.inject.Singleton
 
 
-sealed class SubNavigation {
 
-    @Serializable
-    object LoginUserScreen : SubNavigation()
-
-    @Serializable
-    object MainHomeScreen : SubNavigation()
-}
-
-
-@Singleton
+@Serializable
 open class Routs {
     @Serializable
     object LoginScreenRout

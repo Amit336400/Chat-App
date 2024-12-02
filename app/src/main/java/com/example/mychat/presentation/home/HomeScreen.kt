@@ -28,6 +28,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.mychat.domain.Ext.id
 import com.example.mychat.domain.model.Channel
 import com.example.mychat.presentation.navigation.Routs
 import com.example.mychat.ui.comp.AsyncImages
@@ -55,7 +56,7 @@ fun Home(navHostController: NavHostController,viewModel: HomeViewModel) {
                     isLoading(modifier = Modifier.fillMaxSize())
                 }
                 viewModel.channelsState.whenLoaded { listOfChannei ->
-                    ChannelCard(listOfChannei)
+                    ChannelCard(listOfChannei,navHostController)
                 }
 
             }
@@ -76,7 +77,7 @@ fun Home(navHostController: NavHostController,viewModel: HomeViewModel) {
 
 
 @Composable
-fun ChannelCard(listOfChannei: List<Channel>) {
+fun ChannelCard(listOfChannei: List<Channel>, navHostController: NavHostController) {
 
     LazyColumn(
         modifier = Modifier.padding(1.dp),
@@ -85,7 +86,9 @@ fun ChannelCard(listOfChannei: List<Channel>) {
     ) {
         items(listOfChannei) { channel ->
             Card(
-                onClick = {  },
+                onClick = {
+                    navHostController.navigate(Routs.ChatScreen(channel.id()))
+                },
                 modifier = Modifier.padding(3.dp),
                 colors = CardDefaults.cardColors(
                     containerColor = lightBlue

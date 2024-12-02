@@ -3,7 +3,9 @@ package com.example.mychat.data.remoteRepo
 import com.example.mychat.data.remoteRepo.FireBaseCollection.userChannel
 import com.example.mychat.data.remoteRepo.FireBaseCollection.userCollection
 import com.example.mychat.domain.model.Channel
+import com.example.mychat.domain.model.Message
 import com.example.mychat.domain.model.User
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -89,6 +91,21 @@ class RemoteRepoImpl @Inject constructor(
             .get()
             .await()
             .toObjects(Channel::class.java)
+    }
+
+    override suspend fun getChannel(channelId: String): Channel {
+        return firestore.userChannel()
+            .document(channelId)
+            .get()
+            .await()
+            .toObject(Channel::class.java)?: error("Channel Not Found $channelId")
+    }
+
+    override suspend fun sendMassage(channelId: String, message: Message) {
+        firestore.userChannel()
+            .document(channelId)
+            .update(Channel::messages.name , FieldValue.arrayUnion(message))
+            .await()
     }
 
 }

@@ -12,9 +12,7 @@ import com.example.mychat.presentation.home.Home
 import com.example.mychat.presentation.newChatsScreen.NewChatScreen
 import com.example.mychat.presentation.splashScreen.SplashScreen
 import com.streamliners.base.BaseActivity
-import com.streamliners.base.ext.hiltBaseViewModel
 import com.streamliners.base.ext.koinBaseViewModel
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun BaseActivity.NavHostGraph() {
@@ -44,7 +42,11 @@ val navHostController = rememberNavController()
         }
         composable<Routs.ChatScreen> {
             val channelId: Routs.ChatScreen = it.toRoute()
-            ChatScreen(navHostController = navHostController, channelId = channelId.channelId)
+            ChatScreen(
+                navHostController = navHostController,
+                channelId = channelId.channelId,
+                viewModel = koinBaseViewModel()
+            )
 
         }
 
