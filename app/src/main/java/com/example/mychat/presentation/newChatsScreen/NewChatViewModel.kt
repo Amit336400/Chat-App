@@ -23,7 +23,7 @@ class NewChatViewModel @Inject constructor(
      fun fetchUsers() {
          execute(showLoadingDialog = false) {
              usersListTask.load {
-                 repo.getAllUser()
+                 repo.getAllUser().filter { it.id() != currentUser() }
              }
          }
     }

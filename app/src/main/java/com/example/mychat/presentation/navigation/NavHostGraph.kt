@@ -35,7 +35,7 @@ val navHostController = rememberNavController()
             }
 
             composable<Routs.HomeScreenRout> {
-                Home(navHostController, viewModel = hiltBaseViewModel())
+                Home(navHostController, viewModel = koinBaseViewModel())
             }
 
         composable<Routs.NewChatScreen> {
