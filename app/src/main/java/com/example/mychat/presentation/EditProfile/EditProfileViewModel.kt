@@ -24,13 +24,7 @@ class EditProfileViewModel @Inject constructor(
     fun saveUser(
         user: User,
         onSuccess: () -> Unit,
-        onError: (String) -> Unit,
     ) {
-        val exceptionHandler =
-            CoroutineExceptionHandler { _, error ->
-                error.localizedMessage?.let { onError(it) }
-            }
-
         execute(showLoadingDialog = false) {
             saveProfileTask.load {
             userRepo.saveUserData(user = user)

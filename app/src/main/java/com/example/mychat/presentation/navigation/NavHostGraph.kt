@@ -12,6 +12,7 @@ import com.example.mychat.presentation.home.Home
 import com.example.mychat.presentation.newChatsScreen.NewChatScreen
 import com.example.mychat.presentation.splashScreen.SplashScreen
 import com.streamliners.base.BaseActivity
+import com.streamliners.base.ext.hiltBaseViewModel
 import com.streamliners.base.ext.koinBaseViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -23,23 +24,23 @@ val navHostController = rememberNavController()
     NavHost(navController = navHostController, startDestination = Routs.SplashScreen){
 
         composable<Routs.SplashScreen> {
-          SplashScreen(navHostController, viewModel = koinViewModel())
+          SplashScreen(navHostController, viewModel = koinBaseViewModel())
         }
 
             composable<Routs.LoginScreenRout> {
-                LoginScreen(navHostController, viewModel = koinViewModel())
+                LoginScreen(navHostController, viewModel = koinBaseViewModel())
             }
             composable<Routs.EditProfileRouts> {
                 EditProfileScreen(navHostController, viewModel = koinBaseViewModel() )
             }
 
             composable<Routs.HomeScreenRout> {
-                Home(navHostController)
+                Home(navHostController, viewModel = hiltBaseViewModel())
             }
 
         composable<Routs.NewChatScreen> {
 
-            NewChatScreen(navHostController = navHostController, chatViewModel = koinViewModel())
+            NewChatScreen(navHostController = navHostController, chatViewModel = koinBaseViewModel())
         }
         composable<Routs.ChatScreen> {
             val channelId: Routs.ChatScreen = it.toRoute()

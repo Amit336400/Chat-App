@@ -9,6 +9,7 @@ import com.example.mychat.data.remoteRepo.RemoteRepo
 import com.example.mychat.data.remoteRepo.RemoteRepoImpl
 import com.example.mychat.presentation.EditProfile.EditProfileViewModel
 import com.example.mychat.presentation.Login.LoginViewModel
+import com.example.mychat.presentation.home.HomeViewModel
 import com.example.mychat.presentation.newChatsScreen.NewChatViewModel
 import com.example.mychat.presentation.splashScreen.SplashViewModel
 import com.google.firebase.Firebase
@@ -48,6 +49,7 @@ val viewModel = module {
     viewModel { LoginViewModel(get(),get()) }
     viewModel { NewChatViewModel(get ()) }
     viewModel { SplashViewModel(get ()) }
+    viewModel { HomeViewModel(get ()) }
 }
 
 

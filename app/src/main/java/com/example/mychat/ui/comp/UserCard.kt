@@ -27,7 +27,7 @@ fun UserCard(
     onClick:() -> Unit,
 ) {
 
-    Card(onClick = { onClick },
+    Card(onClick = onClick ,
         modifier = Modifier.padding(3.dp),
         colors = CardDefaults.cardColors(
             containerColor = lightBlue

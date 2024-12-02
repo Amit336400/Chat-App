@@ -190,9 +190,6 @@ fun EditProfileScreen(
                         )
 
                         viewModel.saveUser(user,
-                            onError = {
-                                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-                            },
                             onSuccess = {
 
                                 Toast.makeText(

@@ -5,8 +5,6 @@ import com.example.mychat.data.remoteRepo.FireBaseCollection.userCollection
 import com.example.mychat.domain.model.Channel
 import com.example.mychat.domain.model.User
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -39,13 +37,14 @@ class RemoteRepoImpl @Inject constructor(
             .firstOrNull()
     }
 
-    override suspend fun getAllUser(): Flow<List<User>> = flow {
-        val data = firestore.userCollection()
+    override suspend fun getAllUser(): List<User> {
+        return firestore.userCollection()
             .get()
             .await()
             .toObjects(User::class.java)
-        emit(data)
+
     }
+
 
     override suspend fun getOneToOneChat(
         currentUserId: String,
@@ -83,5 +82,12 @@ class RemoteRepoImpl @Inject constructor(
         return id
     }
 
-
+    override suspend fun getAllChannels(currentUser: String): List<Channel> {
+        return firestore.userChannel()
+            .whereEqualTo(Channel::type.name, Channel.Type.OneToOne)
+            .whereArrayContains(Channel::members.name, currentUser)
+            .get()
+            .await()
+            .toObjects(Channel::class.java)
+    }
 }

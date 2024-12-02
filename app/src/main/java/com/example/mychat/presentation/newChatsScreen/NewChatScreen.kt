@@ -1,22 +1,28 @@
 package com.example.mychat.presentation.newChatsScreen
 
 import android.widget.Toast
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mychat.domain.Ext.id
 import com.example.mychat.presentation.navigation.Routs
 import com.example.mychat.ui.comp.UserCard
+import com.example.mychat.ui.comp.isLoading
+import com.streamliners.base.taskState.comp.whenLoaded
+import com.streamliners.base.taskState.comp.whenLoading
+import com.streamliners.compose.android.comp.appBar.TitleBarScaffold
 
 @Composable
 fun NewChatScreen(
@@ -27,48 +33,36 @@ fun NewChatScreen(
     LaunchedEffect(key1 = Unit) {
         chatViewModel.fetchUsers()
     }
+    TitleBarScaffold(title = "New Chat") {
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        val data by chatViewModel.uiState.collectAsStateWithLifecycle()
-        when (data) {
-            is ChatUiState.Error -> {
-                Toast.makeText(
-                    context,
-                    "${(data as ChatUiState.Error).message}",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-
-            ChatUiState.Loading -> {
-                isLoading(modifier = Modifier.fillMaxSize())
-            }
-
-            is ChatUiState.Success -> {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    items((data as ChatUiState.Success).users) { user ->
-                        UserCard(
-                            user = user,
-                            onClick = {
-                                navHostController.navigate(Routs.ChatScreen(user.id()))
-                            }
-                        )
-                    }
+        chatViewModel.usersListTask.whenLoaded { userList ->
+            LazyColumn(
+                modifier = Modifier.padding(it),
+                contentPadding = PaddingValues(10.dp),
+                verticalArrangement = Arrangement.spacedBy(5.dp)
+            ) {
+                items(userList) { user ->
+                    UserCard(user = user,
+                        onClick = {
+                            Toast.makeText(context, "Click", Toast.LENGTH_SHORT).show()
+                            chatViewModel.onUserSelected(
+                                otherUserId = user.id(),
+                                onChannelReady = {
+                                    navHostController.navigate(Routs.ChatScreen(it))
+                                }
+                            )
+                        })
                 }
             }
+
         }
+
+        chatViewModel.usersListTask.whenLoading {
+            isLoading(modifier = Modifier.fillMaxSize())
+        }
+
     }
 
-
-}
-@Composable
-fun isLoading(modifier: Modifier) {
-    Box(modifier = modifier) {
-        CircularProgressIndicator(
-            modifier = Modifier.align(Alignment.Center)
-        )
-    }
 
 }
 

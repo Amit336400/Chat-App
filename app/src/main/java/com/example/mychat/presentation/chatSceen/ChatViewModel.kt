@@ -1,4 +1,7 @@
 package com.example.mychat.presentation.chatSceen
 
-class ChatViewModel {
+import com.streamliners.base.BaseViewModel
+
+class ChatViewModel : BaseViewModel() {
+
 }
