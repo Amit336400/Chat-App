@@ -1,25 +1,7 @@
-package com.example.mychat.hilt
+package com.example.mychat.koin
 
 
-import android.content.Context
-import com.example.mychat.data.DB.DataStoreUtil
-import com.example.mychat.data.localRepo.repo.PreferenceRepo
-import com.example.mychat.data.localRepo.repoimpl.PreferenceRepoImpl
-import com.example.mychat.data.remoteRepo.RemoteRepo
-import com.example.mychat.data.remoteRepo.RemoteRepoImpl
-import com.example.mychat.domain.usecase.LoginStateUseCase
-import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.firestore
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
-
+/*
 /**
  * Hilt module that provides dependencies for repository and other layers.
  */
@@ -67,3 +49,4 @@ object AppModule {
 
 
 }
+*/

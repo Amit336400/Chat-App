@@ -32,7 +32,6 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.googleauth.data.SignInResult
 import com.example.googleauth.data.rememberGoogleSignInLauncher
@@ -46,7 +45,7 @@ import com.google.firebase.auth.auth
 @Composable
 fun LoginScreen(
     navHostController: NavHostController,
-    viewModel: LoginViewModel = hiltViewModel(),
+    viewModel: LoginViewModel
 ) {
 
     val activity = LocalContext.current as Activity

@@ -15,7 +15,7 @@ sealed class SubNavigation {
 
 
 @Singleton
-class Routs {
+open class Routs {
     @Serializable
     object LoginScreenRout
 
@@ -29,7 +29,10 @@ class Routs {
     object SplashScreen
 
     @Serializable
-    object ChatScreen
+    object NewChatScreen
+
+    @Serializable
+    data class ChatScreen(val channelId : String)
 
 
 }

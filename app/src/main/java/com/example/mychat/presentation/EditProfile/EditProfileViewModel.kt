@@ -1,23 +1,25 @@
 package com.example.mychat.presentation.EditProfile
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.example.mychat.data.localRepo.repo.PreferenceRepo
 import com.example.mychat.data.remoteRepo.RemoteRepo
 import com.example.mychat.domain.model.User
-import com.example.mychat.domain.usecase.LoginStateUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.streamliners.base.BaseViewModel
+import com.streamliners.base.ext.execute
+import com.streamliners.base.taskState.load
+import com.streamliners.base.taskState.taskStateOf
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
-@HiltViewModel
 class EditProfileViewModel @Inject constructor(
-    private val useCase: LoginStateUseCase,
+    private val preferenceRepo: PreferenceRepo,
     private val userRepo: RemoteRepo,
-) : ViewModel() {
+) : BaseViewModel() {
+
+    val saveProfileTask = taskStateOf<Unit>()
+
 
     fun saveUser(
         user: User,
@@ -28,14 +30,16 @@ class EditProfileViewModel @Inject constructor(
             CoroutineExceptionHandler { _, error ->
                 error.localizedMessage?.let { onError(it) }
             }
-        viewModelScope.launch(
-            Dispatchers.IO + exceptionHandler
-        ) {
+
+        execute(showLoadingDialog = false) {
+            saveProfileTask.load {
             userRepo.saveUserData(user = user)
-            useCase.saveLoginState(true)
+                preferenceRepo.saveLoginState(true)
             withContext(Dispatchers.Main) {
                 onSuccess()
             }
         }
+
+    }
     }
 }

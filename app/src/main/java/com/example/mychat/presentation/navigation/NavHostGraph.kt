@@ -1,40 +1,50 @@
 package com.example.mychat.presentation.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.mychat.presentation.EditProfile.SaveUserData
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
+import com.example.mychat.presentation.EditProfile.EditProfileScreen
 import com.example.mychat.presentation.Login.LoginScreen
-import com.example.mychat.presentation.chatsScreen.ChatScreen
+import com.example.mychat.presentation.chatSceen.ChatScreen
 import com.example.mychat.presentation.home.Home
+import com.example.mychat.presentation.newChatsScreen.NewChatScreen
 import com.example.mychat.presentation.splashScreen.SplashScreen
+import com.streamliners.base.BaseActivity
+import com.streamliners.base.ext.koinBaseViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun NavHostGraph(navHostController: NavHostController) {
+fun BaseActivity.NavHostGraph() {
 
-
+val navHostController = rememberNavController()
 
     NavHost(navController = navHostController, startDestination = Routs.SplashScreen){
 
         composable<Routs.SplashScreen> {
-          SplashScreen(navHostController)
+          SplashScreen(navHostController, viewModel = koinViewModel())
         }
 
             composable<Routs.LoginScreenRout> {
-                LoginScreen(navHostController)
+                LoginScreen(navHostController, viewModel = koinViewModel())
             }
             composable<Routs.EditProfileRouts> {
-                SaveUserData(navHostController)
+                EditProfileScreen(navHostController, viewModel = koinBaseViewModel() )
             }
 
             composable<Routs.HomeScreenRout> {
                 Home(navHostController)
             }
 
-        composable<Routs.ChatScreen> {
+        composable<Routs.NewChatScreen> {
 
-            ChatScreen(navHostController = navHostController)
+            NewChatScreen(navHostController = navHostController, chatViewModel = koinViewModel())
+        }
+        composable<Routs.ChatScreen> {
+            val channelId: Routs.ChatScreen = it.toRoute()
+            ChatScreen(navHostController = navHostController, channelId = channelId.channelId)
+
         }
 
 

@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
 
     id("kotlin-kapt")
-    id("com.google.dagger.hilt.android")
+   // id("com.google.dagger.hilt.android")
     alias(libs.plugins.google.gms.google.services)
 
     kotlin("plugin.serialization") version "2.0.0"
@@ -13,7 +13,7 @@ plugins {
 
 android {
     namespace = "com.example.mychat"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.mychat"
@@ -28,6 +28,12 @@ android {
         }
     }
 
+    configurations {
+        "implementation" {
+            exclude("org.jetbrains.compose.material", "material-desktop")
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -38,14 +44,15 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
+        android.buildFeatures.buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -69,6 +76,8 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.storage)
+    implementation(libs.androidx.navigation.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -83,9 +92,13 @@ dependencies {
     api("androidx.navigation:navigation-fragment-ktx:$nav_version")
 
     //hilt
+    /*
     implementation("com.google.dagger:hilt-android:2.51.1")
     kapt("com.google.dagger:hilt-android-compiler:2.51.1")
-    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    */
+  //  implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+
+
 
    // PreferencesDataStore
     implementation ("androidx.datastore:datastore-preferences:1.0.0")
@@ -97,17 +110,25 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 
     // coil Image
-    implementation("io.coil-kt.coil3:coil-compose:3.0.3")
- implementation("io.coil-kt.coil3:coil-network-okhttp:3.0.3")
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
 
 
     // google gson
-    implementation ("com.google.code.gson:gson:2.10.1")
+    implementation(libs.gson)
 
+    // DroidLibs base dependencies add
+    implementation(libs.base)
+    implementation(libs.compose.android)
+    implementation("com.github.The-Streamliners.DroidLibs:compose:1.2.14")
 
+    // Koin for Android
+    implementation(libs.koin.android)
+    implementation(libs.koin.android.v353)
+    implementation(libs.koin.android)
 
-
-
+    implementation ("io.insert-koin:koin-androidx-compose:3.4.0" ) // or latest version
+    //implementation( "io.insert-koin:koin-core:3.4.0")
 
 
 

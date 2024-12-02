@@ -1,24 +1,22 @@
 package com.example.mychat.presentation.Login
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
+import com.example.mychat.data.localRepo.repo.PreferenceRepo
 import com.example.mychat.data.remoteRepo.RemoteRepo
-import com.example.mychat.domain.usecase.LoginStateUseCase
 import com.example.mychat.presentation.navigation.Routs
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.streamliners.base.BaseViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.lang.Error
 import javax.inject.Inject
 
-@HiltViewModel
+
 class LoginViewModel @Inject constructor(
     val repo: RemoteRepo,
-    val useCase: LoginStateUseCase
-) : ViewModel() {
+    val preferenceRepo: PreferenceRepo
+) : BaseViewModel() {
 
     /**
      *  check user is login before or not if login the go to home screen
@@ -28,27 +26,21 @@ class LoginViewModel @Inject constructor(
     fun loginBefore(
         email: String,
         navHostController: NavHostController,
-        onError : (String) -> Unit
+        onError: (String) -> Unit
     ) {
-        val exceptionHandler =
-            CoroutineExceptionHandler { _, error ->
-                error.localizedMessage?.let { onError(it) }
+        viewModelScope.launch(CoroutineExceptionHandler { _, error ->
+            error.localizedMessage?.let(onError)
+        }) {
+            val user = repo.getUserWithEmail(email)
+            Log.d("CheckLog", "checkUserLoginViewModel: $user")
+            if (user != null) {
+                preferenceRepo.saveLoginState(true) // Save login state
+                navHostController.navigate(Routs.HomeScreenRout)
+            } else {
+                navHostController.navigate(Routs.EditProfileRouts)
             }
-        viewModelScope.launch (Dispatchers.IO + exceptionHandler){
-           val user =  repo.getUserWithEmail(email)
-            withContext(Dispatchers.Main){
-                if (user != null) {
-                    // Save Local And Go Home Screen
-                    useCase.saveLoginState(true)
-                    navHostController.navigate(Routs.HomeScreenRout)
-                }else{
-                    // navigate EditProfile Screen
-                    navHostController.navigate(Routs.EditProfileRouts)
-                }
-            }
-            
         }
-
     }
+
 
 }

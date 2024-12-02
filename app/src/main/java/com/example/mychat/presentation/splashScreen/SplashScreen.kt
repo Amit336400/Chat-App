@@ -20,16 +20,17 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+
 import androidx.navigation.NavHostController
 import com.example.mychat.R
 import com.example.mychat.ui.theme.SplashScreenGradient
 import kotlinx.coroutines.delay
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun SplashScreen(
     navHostController: NavHostController,
-    viewModel: SplashViewModel = hiltViewModel(),
+    viewModel: SplashViewModel,
 ) {
     val context = LocalContext.current
     val scale = remember { Animatable(1f) } // Start scale at 1f

@@ -24,7 +24,7 @@ import com.example.mychat.ui.theme.lightBlue
 @Composable
 fun UserCard(
     user: User,
-    onClick: () -> Unit,
+    onClick:() -> Unit,
 ) {
 
     Card(onClick = { onClick },
