@@ -20,6 +20,7 @@ import com.streamliners.compose.android.comp.appBar.TitleBarScaffold
 import com.streamliners.compose.comp.textInput.TextInputLayout
 import com.streamliners.compose.comp.textInput.state.TextInputState
 import com.streamliners.compose.comp.textInput.state.ifValidInput
+import com.streamliners.compose.comp.textInput.state.update
 
 @Composable
 fun ChatScreen(
@@ -60,7 +61,12 @@ fun ChatScreen(
                 trailingIconButton = {
                     IconButton(onClick = {
                         massageInput.ifValidInput { massage->
-                            viewModel.sendMassage(massage,channelId = channelId)
+                            viewModel.sendMassage(massage,channelId = channelId, onSuccess = {
+                                massageInput.update("")
+                            })
+
+
+
                         }
                     }) {
                         Icon(imageVector = Icons.Default.Send, contentDescription = null)

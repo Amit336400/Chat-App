@@ -7,6 +7,9 @@ import com.example.mychat.domain.model.Message
 import com.example.mychat.domain.model.User
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -107,5 +110,20 @@ class RemoteRepoImpl @Inject constructor(
             .update(Channel::messages.name , FieldValue.arrayUnion(message))
             .await()
     }
+
+    override suspend fun getChannelWithFlowMessage(channelId: String): Flow<Channel> =
+        callbackFlow {
+
+            firestore.userChannel()
+                .document(channelId)
+                .addSnapshotListener { value, e ->
+                    e?.let { throw it }
+                   val channel =  value?.toObject(Channel::class.java)
+                    if (channel != null) {
+                        trySend(channel)
+                    }
+                }
+            awaitClose()
+        }
 
 }

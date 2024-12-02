@@ -8,6 +8,8 @@ import com.streamliners.base.BaseViewModel
 import com.streamliners.base.ext.execute
 import com.streamliners.base.taskState.taskStateOf
 import com.streamliners.base.taskState.update
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class ChatViewModel(
     val repo: RemoteRepo,
@@ -19,13 +21,18 @@ class ChatViewModel(
         execute(
             showLoadingDialog = false
         ) {
-            channel.update(repo.getChannel(channelId))
+            launch {
+                repo.getChannelWithFlowMessage(channelId).collectLatest {
+                    channel.update(repo.getChannel(channelId))
+                }
+            }
+
 
         }
 
     }
 
-    fun sendMassage(messageStr: String, channelId: String) {
+    fun sendMassage(messageStr: String, channelId: String,onSuccess :() ->Unit) {
         val message = Message(
             message = messageStr,
             sender = currentUser(),
@@ -34,7 +41,7 @@ class ChatViewModel(
 
         execute(showLoadingDialog = false) {
             repo.sendMassage(channelId = channelId, message =message)
-
+            onSuccess()
         }
 
     }
