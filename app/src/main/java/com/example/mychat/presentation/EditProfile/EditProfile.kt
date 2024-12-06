@@ -46,11 +46,10 @@ import androidx.navigation.NavHostController
 import com.example.mychat.R
 import com.example.mychat.domain.model.User
 import com.example.mychat.presentation.common.CustomEditText
-import com.example.mychat.presentation.navigation.Routs
+import com.example.mychat.presentation.navigation.Routes
 import com.example.mychat.ui.comp.ProfileImagePicker
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
-import com.streamliners.base.BaseActivity
 import com.streamliners.base.taskState.comp.whenLoading
 
 
@@ -198,7 +197,7 @@ fun EditProfileScreen(
                                     Toast.LENGTH_SHORT
                                 )
                                     .show()
-                                navHostController.navigate(Routs.HomeScreenRout)
+                                navHostController.navigate(Routes.HomeScreen)
                             })
                     } else {
                         nameError = true

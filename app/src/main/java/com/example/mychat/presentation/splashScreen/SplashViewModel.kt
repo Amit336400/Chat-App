@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.example.mychat.data.localRepo.repo.PreferenceRepo
-import com.example.mychat.presentation.navigation.Routs
+import com.example.mychat.presentation.navigation.Routes
 import com.streamliners.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,10 +30,10 @@ class SplashViewModel @Inject constructor(
 
             withContext(Dispatchers.Main) {
                 if (log){
-                    navHostController.navigate(Routs.HomeScreenRout)
+                    navHostController.navigate(Routes.HomeScreen)
                 }
                 else{
-                    navHostController.navigate(Routs.LoginScreenRout)
+                    navHostController.navigate(Routes.LoginScreen)
                 }
             }
         }

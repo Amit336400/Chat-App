@@ -19,31 +19,31 @@ fun BaseActivity.NavHostGraph() {
 
     val navHostController = rememberNavController()
 
-    NavHost(navController = navHostController, startDestination = Routs.SplashScreen){
+    NavHost(navController = navHostController, startDestination = Routes.SplashScreen){
 
-        composable<Routs.SplashScreen> {
+        composable<Routes.SplashScreen> {
             SplashScreen(navHostController, viewModel = koinBaseViewModel())
         }
 
-        composable<Routs.LoginScreenRout> {
+        composable<Routes.LoginScreen> {
             LoginScreen(navHostController, viewModel = koinBaseViewModel())
         }
 
-        composable<Routs.EditProfileRouts> {
+        composable<Routes.EditProfileScreen> {
             EditProfileScreen(navHostController, viewModel = koinBaseViewModel())
         }
 
-        composable<Routs.HomeScreenRout> {
+        composable<Routes.HomeScreen> {
             Home(navHostController, viewModel = koinBaseViewModel())
         }
 
-        composable<Routs.NewChatScreen> {
+        composable<Routes.NewChatScreen> {
 
             NewChatScreen(navHostController = navHostController, chatViewModel = koinBaseViewModel())
         }
 
-        composable<Routs.ChatScreen> {
-            val channelId: Routs.ChatScreen = it.toRoute()
+        composable<Routes.ChatScreen> {
+            val channelId: Routes.ChatScreen = it.toRoute()
             ChatScreen(
                 navHostController = navHostController,
                 channelId = channelId.channelId,

@@ -14,7 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mychat.domain.Ext.id
-import com.example.mychat.presentation.navigation.Routs
+import com.example.mychat.presentation.navigation.Routes
 import com.example.mychat.ui.comp.UserCard
 import com.example.mychat.ui.comp.isLoading
 import com.streamliners.base.taskState.comp.whenLoaded
@@ -46,7 +46,7 @@ fun NewChatScreen(
                             chatViewModel.onUserSelected(
                                 otherUserId = user.id(),
                                 onChannelReady = {
-                                    navHostController.navigate(Routs.ChatScreen(it))
+                                    navHostController.navigate(Routes.ChatScreen(it))
                                 }
                             )
                         }

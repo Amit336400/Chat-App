@@ -36,7 +36,7 @@ import androidx.navigation.NavHostController
 import com.example.googleauth.data.SignInResult
 import com.example.googleauth.data.rememberGoogleSignInLauncher
 import com.example.mychat.R
-import com.example.mychat.presentation.navigation.Routs
+import com.example.mychat.presentation.navigation.Routes
 import com.example.mychat.ui.theme.customColour
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
@@ -70,7 +70,7 @@ fun LoginScreen(
                     onError = {
                         isLoading = false
                         Toast.makeText(activity, it, Toast.LENGTH_SHORT).show()
-                        navHostController.navigate(Routs.HomeScreenRout)
+                        navHostController.navigate(Routes.HomeScreen)
                     })
             }
         }

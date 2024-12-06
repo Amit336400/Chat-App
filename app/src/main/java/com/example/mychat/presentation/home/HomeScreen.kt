@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mychat.domain.Ext.id
 import com.example.mychat.domain.model.Channel
-import com.example.mychat.presentation.navigation.Routs
+import com.example.mychat.presentation.navigation.Routes
 import com.example.mychat.ui.comp.AsyncImages
 import com.example.mychat.ui.comp.isLoading
 import com.example.mychat.ui.theme.lightBlue
@@ -64,7 +64,7 @@ fun Home(navHostController: NavHostController,viewModel: HomeViewModel) {
                     .size(100.dp)
                     .align(Alignment.BottomEnd)
                     .padding(20.dp),
-                onClick = { navHostController.navigate(Routs.NewChatScreen) })
+                onClick = { navHostController.navigate(Routes.NewChatScreen) })
             {
                 Icon(imageVector = Icons.Default.Add, contentDescription ="")
 
@@ -85,7 +85,7 @@ fun ChannelCard(listOfChannei: List<Channel>, navHostController: NavHostControll
         items(listOfChannei) { channel ->
             Card(
                 onClick = {
-                    navHostController.navigate(Routs.ChatScreen(channel.id()))
+                    navHostController.navigate(Routes.ChatScreen(channel.id()))
                 },
                 modifier = Modifier.padding(3.dp),
                 colors = CardDefaults.cardColors(

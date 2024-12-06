@@ -1,20 +1,18 @@
 package com.example.mychat.presentation.navigation
 
 import kotlinx.serialization.Serializable
-import javax.inject.Singleton
-
 
 
 @Serializable
-object Routs {
+object Routes {
     @Serializable
-    object LoginScreenRout
+    object LoginScreen
 
     @Serializable
-    object EditProfileRouts
+    object EditProfileScreen
 
     @Serializable
-    object HomeScreenRout
+    object HomeScreen
 
     @Serializable
     object SplashScreen

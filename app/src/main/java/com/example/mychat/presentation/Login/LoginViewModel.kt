@@ -1,12 +1,11 @@
 package com.example.mychat.presentation.Login
 
 import android.util.Log
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.example.mychat.data.localRepo.repo.PreferenceRepo
 import com.example.mychat.data.remoteRepo.RemoteRepo
-import com.example.mychat.presentation.navigation.Routs
+import com.example.mychat.presentation.navigation.Routes
 import com.streamliners.base.BaseViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
@@ -35,9 +34,9 @@ class LoginViewModel @Inject constructor(
             Log.d("CheckLog", "checkUserLoginViewModel: $user")
             if (user != null) {
                 preferenceRepo.saveLoginState(true) // Save login state
-                navHostController.navigate(Routs.HomeScreenRout)
+                navHostController.navigate(Routes.HomeScreen)
             } else {
-                navHostController.navigate(Routs.EditProfileRouts)
+                navHostController.navigate(Routes.EditProfileScreen)
             }
         }
     }
