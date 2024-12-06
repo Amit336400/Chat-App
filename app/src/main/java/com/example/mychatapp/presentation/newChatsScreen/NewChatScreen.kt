@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
@@ -15,11 +16,12 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mychatapp.domain.Ext.id
 import com.example.mychatapp.presentation.navigation.Routes
-import com.example.mychatapp.ui.comp.UserCard
 import com.example.mychatapp.ui.comp.LoadingCPI
+import com.example.mychatapp.ui.comp.UserCard
 import com.streamliners.base.taskState.comp.whenLoaded
 import com.streamliners.base.taskState.comp.whenLoading
 import com.streamliners.compose.android.comp.appBar.TitleBarScaffold
+import com.streamliners.compose.comp.CenterText
 
 @Composable
 fun NewChatScreen(
@@ -30,7 +32,9 @@ fun NewChatScreen(
     LaunchedEffect(key1 = Unit) {
         chatViewModel.fetchUsers()
     }
-    TitleBarScaffold(title = "New Chat") {
+    TitleBarScaffold(title = "New Chat", navigateUp = {
+        navHostController.navigate(Routes.HomeScreen)
+    }) {
 
         chatViewModel.usersListTask.whenLoaded { userList ->
             LazyColumn(
@@ -38,6 +42,11 @@ fun NewChatScreen(
                 contentPadding = PaddingValues(10.dp),
                 verticalArrangement = Arrangement.spacedBy(5.dp)
             ) {
+                if (userList.isNullOrEmpty()) {
+                   item(){
+                       CenterText(text = "Empty...")
+                   }
+                } else {
                 items(userList) { user ->
                     UserCard(
                         user = user,
@@ -51,6 +60,7 @@ fun NewChatScreen(
                             )
                         }
                     )
+                }
                 }
             }
         }

@@ -13,10 +13,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import com.example.mychatapp.presentation.navigation.Routes
 import com.example.mychatapp.ui.comp.LoadingCPI
 import com.streamliners.base.taskState.comp.whenLoaded
 import com.streamliners.base.taskState.comp.whenLoading
 import com.streamliners.compose.android.comp.appBar.TitleBarScaffold
+import com.streamliners.compose.comp.CenterText
 import com.streamliners.compose.comp.textInput.TextInputLayout
 import com.streamliners.compose.comp.textInput.state.TextInputState
 import com.streamliners.compose.comp.textInput.state.ifValidInput
@@ -32,7 +34,9 @@ fun ChatScreen(
         viewModel.start(channelId)
     }
 
-    TitleBarScaffold(title = "Chat") {
+    TitleBarScaffold(title = "Chat",navigateUp = {
+        navHostController.navigate(Routes.HomeScreen)
+    }) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -51,7 +55,11 @@ fun ChatScreen(
                     LoadingCPI(modifier = Modifier.fillMaxSize())
                 }
                 viewModel.channel.whenLoaded {
-                    MassageList(it)
+                    if (!it.messages.isNullOrEmpty()){
+                        MassageList(it)
+                    }else{
+                     CenterText(text = "Chat Is Empty")
+                    }
                 }
             }
             TextInputLayout(

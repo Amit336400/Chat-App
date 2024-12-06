@@ -37,6 +37,7 @@ import com.example.mychatapp.ui.theme.lightBlue
 import com.streamliners.base.taskState.comp.whenLoaded
 import com.streamliners.base.taskState.comp.whenLoading
 import com.streamliners.compose.android.comp.appBar.TitleBarScaffold
+import com.streamliners.compose.comp.CenterText
 
 @Composable
 fun Home(navHostController: NavHostController,viewModel: HomeViewModel) {
@@ -75,14 +76,20 @@ fun Home(navHostController: NavHostController,viewModel: HomeViewModel) {
 
 
 @Composable
-fun ChannelCard(listOfChannei: List<Channel>, navHostController: NavHostController) {
+fun ChannelCard(listOfChannel: List<Channel>, navHostController: NavHostController) {
 
     LazyColumn(
         modifier = Modifier.padding(1.dp),
         contentPadding = PaddingValues(1.dp),
         verticalArrangement = Arrangement.spacedBy(1.dp)
     ) {
-        items(listOfChannei) { channel ->
+
+        if (listOfChannel.isNullOrEmpty()) {
+            item() {
+                CenterText(text = "Empty...")
+            }
+        } else {
+        items(listOfChannel) { channel ->
             Card(
                 onClick = {
                     navHostController.navigate(Routes.ChatScreen(channel.id()))
@@ -117,6 +124,7 @@ fun ChannelCard(listOfChannei: List<Channel>, navHostController: NavHostControll
                     }
                 }
             }
+        }
         }
     }
 }
