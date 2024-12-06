@@ -1,4 +1,4 @@
-package com.example.mychat.data.remoteRepo
+package com.example.mychat.data.remote
 
 import com.google.firebase.firestore.FirebaseFirestore
 

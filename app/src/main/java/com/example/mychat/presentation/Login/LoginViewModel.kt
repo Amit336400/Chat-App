@@ -3,8 +3,8 @@ package com.example.mychat.presentation.Login
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
-import com.example.mychat.data.localRepo.repo.PreferenceRepo
-import com.example.mychat.data.remoteRepo.RemoteRepo
+import com.example.mychat.domain.local.repo.PreferenceRepo
+import com.example.mychat.domain.remote.UserRepo
 import com.example.mychat.presentation.navigation.Routes
 import com.streamliners.base.BaseViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 
 class LoginViewModel @Inject constructor(
-    val repo: RemoteRepo,
+    val repo: UserRepo,
     val preferenceRepo: PreferenceRepo
 ) : BaseViewModel() {
 

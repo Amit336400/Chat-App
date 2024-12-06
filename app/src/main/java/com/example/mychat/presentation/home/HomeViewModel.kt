@@ -1,10 +1,10 @@
 package com.example.mychat.presentation.home
-import android.util.Log
-import com.example.mychat.data.remoteRepo.RemoteRepo
 import com.example.mychat.domain.Ext.currentUser
 import com.example.mychat.domain.Ext.id
 import com.example.mychat.domain.Ext.imageUri
 import com.example.mychat.domain.model.Channel
+import com.example.mychat.domain.remote.ChannelRepo
+import com.example.mychat.domain.remote.UserRepo
 import com.streamliners.base.BaseViewModel
 import com.streamliners.base.ext.execute
 import com.streamliners.base.taskState.taskStateOf
@@ -13,15 +13,16 @@ import javax.inject.Inject
 
 
 class HomeViewModel @Inject constructor(
-    private val repo: RemoteRepo,
+    private val channelRepo: ChannelRepo,
+    private val userRepo: UserRepo
 ):BaseViewModel() {
 
     val channelsState = taskStateOf<List<Channel>>()
 
     fun start() {
         execute(showLoadingDialog = false) {
-            val users = repo.getAllUser()
-            val channels = repo.getAllChannels(currentUser = currentUser())
+            val users = userRepo.getAllUser()
+            val channels = channelRepo.getAllChannels(currentUser = currentUser())
                 .map { channel ->
                     if (channel.type == Channel.Type.OneToOne) {
 

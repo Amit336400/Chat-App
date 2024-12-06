@@ -1,9 +1,11 @@
 package com.example.mychat.presentation.chatSceen
 
-import com.example.mychat.data.remoteRepo.RemoteRepo
+import com.example.mychat.data.remote.ChannelRepoImpl
+import com.example.mychat.domain.remote.UserRepo
 import com.example.mychat.domain.Ext.currentUser
 import com.example.mychat.domain.model.Channel
 import com.example.mychat.domain.model.Message
+import com.example.mychat.domain.remote.ChannelRepo
 import com.streamliners.base.BaseViewModel
 import com.streamliners.base.ext.execute
 import com.streamliners.base.taskState.taskStateOf
@@ -12,7 +14,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class ChatViewModel(
-    val repo: RemoteRepo,
+    val repo: ChannelRepo,
 ) : BaseViewModel() {
     val channel = taskStateOf<Channel>()
 

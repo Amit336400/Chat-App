@@ -1,7 +1,7 @@
 package com.example.mychat.presentation.splashScreen
 
 import androidx.navigation.NavHostController
-import com.example.mychat.data.localRepo.repo.PreferenceRepo
+import com.example.mychat.domain.local.repo.PreferenceRepo
 import com.example.mychat.presentation.navigation.Routes
 import com.streamliners.base.BaseViewModel
 import com.streamliners.base.ext.execute

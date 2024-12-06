@@ -1,6 +1,4 @@
-package com.example.mychat.data.localRepo.repo
-
-import kotlinx.coroutines.flow.Flow
+package com.example.mychat.domain.local.repo
 
 interface PreferenceRepo {
     suspend fun getLoginState() : Boolean

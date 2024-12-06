@@ -1,7 +1,7 @@
-package com.example.mychat.data.localRepo.repoimpl
+package com.example.mychat.data.local.repoimpl
 
 import com.example.mychat.data.DB.DataStoreUtil
-import com.example.mychat.data.localRepo.repo.PreferenceRepo
+import com.example.mychat.domain.local.repo.PreferenceRepo
 import javax.inject.Inject
 
 class PreferenceRepoImpl @Inject constructor(

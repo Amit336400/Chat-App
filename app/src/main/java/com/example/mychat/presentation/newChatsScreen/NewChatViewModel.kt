@@ -1,10 +1,10 @@
 package com.example.mychat.presentation.newChatsScreen
 
-import android.util.Log
-import com.example.mychat.data.remoteRepo.RemoteRepo
+import com.example.mychat.domain.remote.UserRepo
 import com.example.mychat.domain.Ext.currentUser
 import com.example.mychat.domain.Ext.id
 import com.example.mychat.domain.model.User
+import com.example.mychat.domain.remote.ChannelRepo
 import com.streamliners.base.BaseViewModel
 import com.streamliners.base.ext.execute
 import com.streamliners.base.ext.executeOnMain
@@ -14,7 +14,8 @@ import javax.inject.Inject
 
 
 class NewChatViewModel @Inject constructor(
-    private val repo: RemoteRepo,
+    private val channelRepo: ChannelRepo,
+    private val userRepo: UserRepo,
 ) : BaseViewModel() {
 
     val usersListTask = taskStateOf<List<User>>()
@@ -22,7 +23,7 @@ class NewChatViewModel @Inject constructor(
     fun fetchUsers() {
         execute(showLoadingDialog = false) {
             usersListTask.load {
-                repo.getAllUser().filter { it.id() != currentUser() }
+                userRepo.getAllUser().filter { it.id() != currentUser() }
             }
         }
     }
@@ -33,11 +34,11 @@ class NewChatViewModel @Inject constructor(
 
         execute(showLoadingDialog = false) {
 
-            val channel = repo.getOneToOneChat(currentUser(), otherUserId)
+            val channel = channelRepo.getOneToOneChat(currentUser(), otherUserId)
             val channelId =  if (channel != null) {
                 channel.id()
             } else {
-                repo.createOneToOneChannel(currentUser(),otherUserId)
+                channelRepo.createOneToOneChannel(currentUser(),otherUserId)
             }
             executeOnMain {
                 onChannelReady(channelId)
