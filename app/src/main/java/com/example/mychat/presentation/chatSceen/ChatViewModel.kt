@@ -30,7 +30,7 @@ class ChatViewModel(
 
     }
 
-    fun sendMassage(messageStr: String, channelId: String,onSuccess :() ->Unit) {
+    fun sendMessage(messageStr: String, channelId: String, onSuccess :() ->Unit) {
         val message = Message(
             message = messageStr,
             sender = currentUser(),

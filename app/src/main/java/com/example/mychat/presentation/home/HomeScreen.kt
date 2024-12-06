@@ -32,7 +32,7 @@ import com.example.mychat.domain.Ext.id
 import com.example.mychat.domain.model.Channel
 import com.example.mychat.presentation.navigation.Routes
 import com.example.mychat.ui.comp.AsyncImages
-import com.example.mychat.ui.comp.isLoading
+import com.example.mychat.ui.comp.LoadingCPI
 import com.example.mychat.ui.theme.lightBlue
 import com.streamliners.base.taskState.comp.whenLoaded
 import com.streamliners.base.taskState.comp.whenLoading
@@ -53,10 +53,10 @@ fun Home(navHostController: NavHostController,viewModel: HomeViewModel) {
             ) {
 
                 viewModel.channelsState.whenLoading {
-                    isLoading(modifier = Modifier.fillMaxSize())
+                    LoadingCPI(modifier = Modifier.fillMaxSize())
                 }
-                viewModel.channelsState.whenLoaded { listOfChannei ->
-                    ChannelCard(listOfChannei,navHostController)
+                viewModel.channelsState.whenLoaded { listOfChannel ->
+                    ChannelCard(listOfChannel,navHostController)
                 }
             }
             FloatingActionButton(

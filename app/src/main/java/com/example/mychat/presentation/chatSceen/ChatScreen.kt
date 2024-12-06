@@ -13,7 +13,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import com.example.mychat.ui.comp.isLoading
+import com.example.mychat.ui.comp.LoadingCPI
 import com.streamliners.base.taskState.comp.whenLoaded
 import com.streamliners.base.taskState.comp.whenLoading
 import com.streamliners.compose.android.comp.appBar.TitleBarScaffold
@@ -48,7 +48,7 @@ fun ChatScreen(
                 modifier = Modifier.weight(1f)
             ) {
                 viewModel.channel.whenLoading {
-                    isLoading(modifier = Modifier.fillMaxSize())
+                    LoadingCPI(modifier = Modifier.fillMaxSize())
                 }
                 viewModel.channel.whenLoaded {
                     MassageList(it)
@@ -59,7 +59,7 @@ fun ChatScreen(
                 trailingIconButton = {
                     IconButton(onClick = {
                         massageInput.ifValidInput { massage->
-                            viewModel.sendMassage(massage,channelId = channelId, onSuccess = {
+                            viewModel.sendMessage(massage,channelId = channelId, onSuccess = {
                                 massageInput.update("")
                             })
                         }

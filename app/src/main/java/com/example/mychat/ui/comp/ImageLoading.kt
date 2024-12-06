@@ -9,7 +9,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
@@ -59,7 +58,7 @@ fun ImageLoading(
 }
 
 @Composable
-fun isLoading(modifier: Modifier) {
+fun LoadingCPI(modifier: Modifier) {
     Box(modifier = modifier) {
         CircularProgressIndicator(
             modifier = Modifier.align(Alignment.Center)

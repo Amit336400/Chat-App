@@ -16,7 +16,7 @@ import androidx.navigation.NavHostController
 import com.example.mychat.domain.Ext.id
 import com.example.mychat.presentation.navigation.Routes
 import com.example.mychat.ui.comp.UserCard
-import com.example.mychat.ui.comp.isLoading
+import com.example.mychat.ui.comp.LoadingCPI
 import com.streamliners.base.taskState.comp.whenLoaded
 import com.streamliners.base.taskState.comp.whenLoading
 import com.streamliners.compose.android.comp.appBar.TitleBarScaffold
@@ -55,7 +55,7 @@ fun NewChatScreen(
             }
         }
         chatViewModel.usersListTask.whenLoading {
-            isLoading(modifier = Modifier.fillMaxSize())
+            LoadingCPI(modifier = Modifier.fillMaxSize())
         }
     }
 }
