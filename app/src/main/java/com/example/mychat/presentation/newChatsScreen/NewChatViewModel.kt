@@ -19,18 +19,13 @@ class NewChatViewModel @Inject constructor(
 
     val usersListTask = taskStateOf<List<User>>()
 
-
-     fun fetchUsers() {
-         execute(showLoadingDialog = false) {
-             usersListTask.load {
-                 repo.getAllUser().filter { it.id() != currentUser() }
-             }
-         }
+    fun fetchUsers() {
+        execute(showLoadingDialog = false) {
+            usersListTask.load {
+                repo.getAllUser().filter { it.id() != currentUser() }
+            }
+        }
     }
-
-
-
-
 
     fun onUserSelected(
         otherUserId: String,
@@ -39,8 +34,8 @@ class NewChatViewModel @Inject constructor(
         execute(showLoadingDialog = false) {
 
             val channel = repo.getOneToOneChat(currentUser(), otherUserId)
-           val channelId =  if (channel != null) {
-               channel.id()
+            val channelId =  if (channel != null) {
+                channel.id()
             } else {
                 repo.createOneToOneChannel(currentUser(),otherUserId)
             }
@@ -48,12 +43,7 @@ class NewChatViewModel @Inject constructor(
                 onChannelReady(channelId)
             }
         }
-
-
     }
-
-
-
 }
 
 

@@ -27,13 +27,12 @@ class EditProfileViewModel @Inject constructor(
     ) {
         execute(showLoadingDialog = false) {
             saveProfileTask.load {
-            userRepo.saveUserData(user = user)
+                userRepo.saveUserData(user = user)
                 preferenceRepo.saveLoginState(true)
-            withContext(Dispatchers.Main) {
-                onSuccess()
+                withContext(Dispatchers.Main) {
+                    onSuccess()
+                }
             }
         }
-
-    }
     }
 }

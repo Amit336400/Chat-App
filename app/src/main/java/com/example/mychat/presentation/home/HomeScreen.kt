@@ -58,9 +58,7 @@ fun Home(navHostController: NavHostController,viewModel: HomeViewModel) {
                 viewModel.channelsState.whenLoaded { listOfChannei ->
                     ChannelCard(listOfChannei,navHostController)
                 }
-
             }
-
             FloatingActionButton(
                 modifier = Modifier
                     .size(100.dp)
@@ -96,7 +94,6 @@ fun ChannelCard(listOfChannei: List<Channel>, navHostController: NavHostControll
 
                 ) {
 
-
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -110,22 +107,16 @@ fun ChannelCard(listOfChannei: List<Channel>, navHostController: NavHostControll
                         modifier = Modifier
                             .size(50.dp)
                             .clip(CircleShape),
-
-                        )
+                    )
                     Column {
                         Text(
                             text = channel.name,
                             style = MaterialTheme.typography.titleLarge,
                             color = Color.Black
                         )
-
                     }
                 }
             }
-
-
         }
     }
-
-
 }

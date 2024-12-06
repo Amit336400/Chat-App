@@ -6,7 +6,7 @@ import javax.inject.Singleton
 
 
 @Serializable
-open class Routs {
+object Routs {
     @Serializable
     object LoginScreenRout
 
@@ -24,6 +24,5 @@ open class Routs {
 
     @Serializable
     data class ChatScreen(val channelId : String)
-
 
 }

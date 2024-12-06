@@ -16,11 +16,7 @@ fun App(
     navHostController: NavHostController,
     saveUserDataViewModel: EditProfileViewModel
 ) {
-
-
     //saveUserDataViewModel.getLoginState()
     val auth = Firebase.auth
-
-
 
 }

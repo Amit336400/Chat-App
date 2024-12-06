@@ -45,8 +45,6 @@ fun SplashScreen(
                 easing = FastOutSlowInEasing
             )
         )
-
-
     }
 
     Box(

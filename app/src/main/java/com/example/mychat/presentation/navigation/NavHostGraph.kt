@@ -17,29 +17,31 @@ import com.streamliners.base.ext.koinBaseViewModel
 @Composable
 fun BaseActivity.NavHostGraph() {
 
-val navHostController = rememberNavController()
+    val navHostController = rememberNavController()
 
     NavHost(navController = navHostController, startDestination = Routs.SplashScreen){
 
         composable<Routs.SplashScreen> {
-          SplashScreen(navHostController, viewModel = koinBaseViewModel())
+            SplashScreen(navHostController, viewModel = koinBaseViewModel())
         }
 
-            composable<Routs.LoginScreenRout> {
-                LoginScreen(navHostController, viewModel = koinBaseViewModel())
-            }
-            composable<Routs.EditProfileRouts> {
-                EditProfileScreen(navHostController, viewModel = koinBaseViewModel() )
-            }
+        composable<Routs.LoginScreenRout> {
+            LoginScreen(navHostController, viewModel = koinBaseViewModel())
+        }
 
-            composable<Routs.HomeScreenRout> {
-                Home(navHostController, viewModel = koinBaseViewModel())
-            }
+        composable<Routs.EditProfileRouts> {
+            EditProfileScreen(navHostController, viewModel = koinBaseViewModel())
+        }
+
+        composable<Routs.HomeScreenRout> {
+            Home(navHostController, viewModel = koinBaseViewModel())
+        }
 
         composable<Routs.NewChatScreen> {
 
             NewChatScreen(navHostController = navHostController, chatViewModel = koinBaseViewModel())
         }
+
         composable<Routs.ChatScreen> {
             val channelId: Routs.ChatScreen = it.toRoute()
             ChatScreen(
@@ -47,11 +49,6 @@ val navHostController = rememberNavController()
                 channelId = channelId.channelId,
                 viewModel = koinBaseViewModel()
             )
-
         }
-
-
     }
-
-
 }

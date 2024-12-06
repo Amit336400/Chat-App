@@ -40,14 +40,9 @@ class HomeViewModel @Inject constructor(
                         channel
                     }
                 }
-
-
             channelsState.update(channels)
         }
-
-
-
-        }
     }
+}
 
 

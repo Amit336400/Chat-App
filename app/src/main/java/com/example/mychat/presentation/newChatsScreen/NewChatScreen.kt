@@ -2,16 +2,13 @@ package com.example.mychat.presentation.newChatsScreen
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -42,7 +39,8 @@ fun NewChatScreen(
                 verticalArrangement = Arrangement.spacedBy(5.dp)
             ) {
                 items(userList) { user ->
-                    UserCard(user = user,
+                    UserCard(
+                        user = user,
                         onClick = {
                             Toast.makeText(context, "Click", Toast.LENGTH_SHORT).show()
                             chatViewModel.onUserSelected(
@@ -51,18 +49,14 @@ fun NewChatScreen(
                                     navHostController.navigate(Routs.ChatScreen(it))
                                 }
                             )
-                        })
+                        }
+                    )
                 }
             }
-
         }
-
         chatViewModel.usersListTask.whenLoading {
             isLoading(modifier = Modifier.fillMaxSize())
         }
-
     }
-
-
 }
 

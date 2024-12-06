@@ -55,11 +55,11 @@ fun LoginScreen(
     // Google Sign-In launcher
     val launcher =
         rememberGoogleSignInLauncher(
-        activity = activity,
-        onSignInResult = { result ->
-            signInResult = result
-        }
-    )
+            activity = activity,
+            onSignInResult = { result ->
+                signInResult = result
+            }
+        )
     LaunchedEffect (
         key1 = signInResult.success
     ){
@@ -131,7 +131,6 @@ fun LoginScreen(
                 color = Color.White
             )
         }
-
     }
 }
 

@@ -33,5 +33,4 @@ fun CustomEditText(
         readOnly = readOnly,
         enabled = enabled,
     )
-
 }

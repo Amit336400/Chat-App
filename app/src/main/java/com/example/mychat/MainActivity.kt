@@ -11,23 +11,19 @@ import com.streamliners.base.uiEvent.UiEventDialogs
 
 class MainActivity: BaseActivity(){
 
- override var buildType: String = BuildConfig.BUILD_TYPE
+    override var buildType: String = BuildConfig.BUILD_TYPE
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-       enableEdgeToEdge()
+        enableEdgeToEdge()
         setContent {
             MyChatTheme {
-                 //    Main content of the app, such as chat screen
 
-                        UiEventDialogs()
-                           NavHostGraph()
-
-                        }
-
-                    }
-
+                UiEventDialogs()
+                NavHostGraph()
 
             }
         }
+    }
+}
 

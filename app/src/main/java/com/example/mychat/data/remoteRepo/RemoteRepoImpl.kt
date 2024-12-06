@@ -63,7 +63,7 @@ class RemoteRepoImpl @Inject constructor(
             .toObjects(Channel::class.java)
             .firstOrNull {
                 it.members == listOf(currentUserId, otherUserId) ||
-                it.members == listOf(currentUserId, otherUserId)
+                        it.members == listOf(currentUserId, otherUserId)
             }
     }
 
@@ -104,13 +104,6 @@ class RemoteRepoImpl @Inject constructor(
             .toObject(Channel::class.java)?: error("Channel Not Found $channelId")
     }
 
-    override suspend fun sendMassage(channelId: String, message: Message) {
-        firestore.userChannel()
-            .document(channelId)
-            .update(Channel::messages.name , FieldValue.arrayUnion(message))
-            .await()
-    }
-
     override suspend fun getChannelWithFlowMessage(channelId: String): Flow<Channel> =
         callbackFlow {
 
@@ -118,12 +111,19 @@ class RemoteRepoImpl @Inject constructor(
                 .document(channelId)
                 .addSnapshotListener { value, e ->
                     e?.let { throw it }
-                   val channel =  value?.toObject(Channel::class.java)
+                    val channel =  value?.toObject(Channel::class.java)
                     if (channel != null) {
                         trySend(channel)
                     }
                 }
             awaitClose()
         }
+
+    override suspend fun sendMassage(channelId: String, message: Message) {
+        firestore.userChannel()
+            .document(channelId)
+            .update(Channel::messages.name , FieldValue.arrayUnion(message))
+            .await()
+    }
 
 }

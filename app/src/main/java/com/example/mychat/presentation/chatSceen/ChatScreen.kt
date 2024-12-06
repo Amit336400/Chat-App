@@ -31,7 +31,7 @@ fun ChatScreen(
     LaunchedEffect(key1 = Unit) {
         viewModel.start(channelId)
     }
-    
+
     TitleBarScaffold(title = "Chat") {
         Column(
             modifier = Modifier
@@ -44,7 +44,6 @@ fun ChatScreen(
                     TextInputState("Massage")
                 )
             }
-
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -55,7 +54,6 @@ fun ChatScreen(
                     MassageList(it)
                 }
             }
-
             TextInputLayout(
                 state = massageInput,
                 trailingIconButton = {
@@ -64,20 +62,12 @@ fun ChatScreen(
                             viewModel.sendMassage(massage,channelId = channelId, onSuccess = {
                                 massageInput.update("")
                             })
-
-
-
                         }
                     }) {
                         Icon(imageVector = Icons.Default.Send, contentDescription = null)
-
                     }
                 }
             )
-
         }
-
-        
     }
-
 }

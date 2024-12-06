@@ -16,7 +16,6 @@ class ChatViewModel(
 ) : BaseViewModel() {
     val channel = taskStateOf<Channel>()
 
-
     fun start(channelId: String) {
         execute(
             showLoadingDialog = false
@@ -26,7 +25,6 @@ class ChatViewModel(
                     channel.update(repo.getChannel(channelId))
                 }
             }
-
 
         }
 
@@ -43,7 +41,5 @@ class ChatViewModel(
             repo.sendMassage(channelId = channelId, message =message)
             onSuccess()
         }
-
     }
-
 }

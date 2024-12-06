@@ -13,7 +13,7 @@ import java.io.File
 
 class DataStoreUtil(
     private val dataStore: DataStore<Preferences>,
-    ) {
+) {
 
     companion object {
         fun create(context: Context): DataStoreUtil {
@@ -65,5 +65,4 @@ class DataStoreUtil(
             it.remove(stringPreferencesKey(key))
         }
     }
-
 }

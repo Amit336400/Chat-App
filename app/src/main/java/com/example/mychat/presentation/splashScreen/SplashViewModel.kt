@@ -1,7 +1,6 @@
 package com.example.mychat.presentation.splashScreen
 
 import android.util.Log
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.example.mychat.data.localRepo.repo.PreferenceRepo
@@ -15,7 +14,7 @@ import javax.inject.Inject
 
 class SplashViewModel @Inject constructor(
     private val useCase: PreferenceRepo,
-    ) : BaseViewModel() {
+) : BaseViewModel() {
 
     fun checkUserIsLoginOrNot(
         navHostController: NavHostController,
@@ -25,12 +24,13 @@ class SplashViewModel @Inject constructor(
         ) {
             val log = useCase.getLoginState()
 
+            // TODO On error toast
+
             Log.d("CheckLog", "checkUserIsLoginOrNot: $log")
 
             withContext(Dispatchers.Main) {
                 if (log){
                     navHostController.navigate(Routs.HomeScreenRout)
-
                 }
                 else{
                     navHostController.navigate(Routs.LoginScreenRout)
