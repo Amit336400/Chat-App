@@ -198,24 +198,4 @@ fun EditProfileScreen(
 
 }
 
-@Composable
-fun GenderButton(
-    gender: String,
-    isSelected: String?,
-    onClick: () -> Unit,
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick)
-            .padding(vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        RadioButton(
-            selected = gender == isSelected,
-            onClick = onClick
-        )
-        Spacer(modifier = Modifier.width(8.dp))
-        Text(text = gender.capitalize()) // Capitalize gender name
-    }
-}
+

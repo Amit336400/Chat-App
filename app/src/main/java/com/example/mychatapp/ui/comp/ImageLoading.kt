@@ -58,12 +58,4 @@ fun ImageLoading(
 
 }
 
-@Composable
-fun LoadingCPI(modifier: Modifier) {
-    Box(modifier = modifier.background(grayTransparent)) {
-        CircularProgressIndicator(
-            modifier = Modifier.align(Alignment.Center)
-        )
-    }
 
-}
