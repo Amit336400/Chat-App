@@ -31,7 +31,6 @@ class LoginViewModel @Inject constructor(
             error.localizedMessage?.let(onError)
         }) {
             val user = repo.getUserWithEmail(email)
-            Log.d("CheckLog", "checkUserLoginViewModel: $user")
             if (user != null) {
                 preferenceRepo.saveLoginState(true) // Save login state
                 navHostController.navigate(Routes.HomeScreen)
