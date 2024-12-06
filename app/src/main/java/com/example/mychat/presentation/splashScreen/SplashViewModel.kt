@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 
 class SplashViewModel @Inject constructor(
-    private val useCase: PreferenceRepo,
+    private val repo: PreferenceRepo,
 ) : BaseViewModel() {
 
     fun checkUserIsLoginOrNot(
@@ -22,7 +22,7 @@ class SplashViewModel @Inject constructor(
         viewModelScope.launch(
             Dispatchers.Default
         ) {
-            val log = useCase.getLoginState()
+            val log = repo.getLoginState()
 
             // TODO On error toast
 

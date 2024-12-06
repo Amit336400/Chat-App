@@ -8,11 +8,11 @@ class PreferenceRepoImpl @Inject constructor(
     private  val dataStore:DataStoreUtil
 ) : PreferenceRepo {
     override suspend fun getLoginState(): Boolean {
-        return dataStore.getData<Boolean>("isLoggedIn") ?: false
+        return dataStore.getData<Boolean>(LOGIN_KEY) ?: false
     }
 
     override suspend fun saveLoginState(isLogin: Boolean) {
-        dataStore.setData("isLoggedIn",true)
+        dataStore.setData(LOGIN_KEY,isLogin)
     }
 
 }
