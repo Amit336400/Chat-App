@@ -2,7 +2,7 @@ package com.example.mychatapp.domain.model
 
 
 data class User(
-    val id: String? = null,
+    val id: String,
     val name: String,
     val email: String,
     val bio: String?,
@@ -11,7 +11,7 @@ data class User(
 ) {
     // Secondary constructor with specific default values
     constructor() : this(
-        id = null,
+        id = "",
         name = "",
         email = "",
         bio = "",

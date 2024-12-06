@@ -66,11 +66,3 @@ fun UserCard(
     }
 
 }
-
-@Preview
-@Composable
-fun pv() {
-
-
-
-}
