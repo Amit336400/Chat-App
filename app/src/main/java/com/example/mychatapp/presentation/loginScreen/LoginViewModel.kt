@@ -1,4 +1,4 @@
-package com.example.mychatapp.presentation.Login
+package com.example.mychatapp.presentation.loginScreen
 
 import androidx.navigation.NavHostController
 import com.example.mychatapp.domain.local.repo.PreferenceRepo

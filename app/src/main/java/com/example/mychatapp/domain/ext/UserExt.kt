@@ -1,4 +1,4 @@
-package com.example.mychatapp.domain.Ext
+package com.example.mychatapp.domain.ext
 
 import com.example.mychatapp.domain.model.User
 import com.example.mychatapp.ui.comp.placeHolder

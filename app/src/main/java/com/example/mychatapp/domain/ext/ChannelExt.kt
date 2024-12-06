@@ -1,4 +1,4 @@
-package com.example.mychatapp.domain.Ext
+package com.example.mychatapp.domain.ext
 
 import com.example.mychatapp.domain.model.Channel
 

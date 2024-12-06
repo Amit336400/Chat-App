@@ -1,4 +1,4 @@
-package com.example.mychatapp.presentation.EditProfile
+package com.example.mychatapp.presentation.editProfileScreen
 
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -37,7 +37,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mychatapp.R
-import com.example.mychatapp.domain.Ext.currentUser
+import com.example.mychatapp.domain.ext.currentUser
 import com.example.mychatapp.domain.model.Gender
 import com.example.mychatapp.domain.model.User
 import com.example.mychatapp.presentation.common.CustomEditText

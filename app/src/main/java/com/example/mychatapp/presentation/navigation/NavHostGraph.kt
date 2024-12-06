@@ -5,10 +5,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.example.mychatapp.presentation.EditProfile.EditProfileScreen
-import com.example.mychatapp.presentation.Login.LoginScreen
+import com.example.mychatapp.presentation.editProfileScreen.EditProfileScreen
+import com.example.mychatapp.presentation.loginScreen.LoginScreen
 import com.example.mychatapp.presentation.chatSceen.ChatScreen
-import com.example.mychatapp.presentation.home.Home
+import com.example.mychatapp.presentation.homeScreen.Home
 import com.example.mychatapp.presentation.newChatsScreen.NewChatScreen
 import com.example.mychatapp.presentation.splashScreen.SplashScreen
 import com.streamliners.base.BaseActivity

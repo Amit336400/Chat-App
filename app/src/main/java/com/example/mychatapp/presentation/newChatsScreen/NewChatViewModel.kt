@@ -1,8 +1,8 @@
 package com.example.mychatapp.presentation.newChatsScreen
 
 import com.example.mychatapp.domain.remote.UserRepo
-import com.example.mychatapp.domain.Ext.currentUser
-import com.example.mychatapp.domain.Ext.id
+import com.example.mychatapp.domain.ext.currentUser
+import com.example.mychatapp.domain.ext.id
 import com.example.mychatapp.domain.model.User
 import com.example.mychatapp.domain.remote.ChannelRepo
 import com.streamliners.base.BaseViewModel

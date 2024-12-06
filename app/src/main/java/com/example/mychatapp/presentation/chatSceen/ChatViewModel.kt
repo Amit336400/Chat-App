@@ -1,6 +1,6 @@
 package com.example.mychatapp.presentation.chatSceen
 
-import com.example.mychatapp.domain.Ext.currentUser
+import com.example.mychatapp.domain.ext.currentUser
 import com.example.mychatapp.domain.model.Channel
 import com.example.mychatapp.domain.model.Message
 import com.example.mychatapp.domain.remote.ChannelRepo

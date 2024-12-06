@@ -1,8 +1,7 @@
-package com.example.mychatapp.presentation.EditProfile
+package com.example.mychatapp.presentation.editProfileScreen
 
 import androidx.core.net.toUri
-import com.example.mychatapp.data.remote.USER_IMAGE
-import com.example.mychatapp.domain.Ext.currentUser
+import com.example.mychatapp.domain.ext.currentUser
 import com.example.mychatapp.domain.local.repo.PreferenceRepo
 import com.example.mychatapp.domain.remote.UserRepo
 import com.example.mychatapp.domain.model.User

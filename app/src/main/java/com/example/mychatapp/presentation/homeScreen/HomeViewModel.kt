@@ -1,7 +1,7 @@
-package com.example.mychatapp.presentation.home
-import com.example.mychatapp.domain.Ext.currentUser
-import com.example.mychatapp.domain.Ext.id
-import com.example.mychatapp.domain.Ext.imageUri
+package com.example.mychatapp.presentation.homeScreen
+import com.example.mychatapp.domain.ext.currentUser
+import com.example.mychatapp.domain.ext.id
+import com.example.mychatapp.domain.ext.imageUri
 import com.example.mychatapp.domain.model.Channel
 import com.example.mychatapp.domain.remote.ChannelRepo
 import com.example.mychatapp.domain.remote.UserRepo

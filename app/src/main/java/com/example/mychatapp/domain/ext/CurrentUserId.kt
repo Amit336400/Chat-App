@@ -1,4 +1,4 @@
-package com.example.mychatapp.domain.Ext
+package com.example.mychatapp.domain.ext
 
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth

@@ -1,6 +1,6 @@
-package com.example.mychatapp.presentation.Login
+package com.example.mychatapp.presentation.loginScreen
 
-import com.example.mychatapp.GoogleAuth.GoogleSignInManager
+import com.example.mychatapp.googleAuth.GoogleSignInManager
 import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -32,8 +31,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.mychatapp.GoogleAuth.SignInResult
-import com.example.mychatapp.GoogleAuth.rememberGoogleSignInLauncher
+import com.example.mychatapp.googleAuth.SignInResult
+import com.example.mychatapp.googleAuth.rememberGoogleSignInLauncher
 import com.example.mychatapp.R
 import com.example.mychatapp.presentation.navigation.Routes
 import com.example.mychatapp.ui.comp.CustomDialog

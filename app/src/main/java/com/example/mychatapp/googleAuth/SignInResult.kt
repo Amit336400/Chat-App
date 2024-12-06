@@ -1,6 +1,5 @@
-package com.example.mychatapp.GoogleAuth
+package com.example.mychatapp.googleAuth
 
-// AuthData.kt
 data class SignInResult(
     val success: Boolean = false,
     val errorMessage: String? = null,

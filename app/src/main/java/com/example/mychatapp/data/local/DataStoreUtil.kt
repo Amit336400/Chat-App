@@ -1,4 +1,4 @@
-package com.example.mychatapp.data.DB
+package com.example.mychatapp.data.local
 
 
 import android.content.Context

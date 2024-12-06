@@ -1,4 +1,4 @@
-package com.example.mychatapp.GoogleAuth
+package com.example.mychatapp.googleAuth
 
 import android.app.Activity
 import android.content.Intent

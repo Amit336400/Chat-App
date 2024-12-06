@@ -1,4 +1,4 @@
-package com.example.mychatapp.presentation.home
+package com.example.mychatapp.presentation.homeScreen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,7 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.mychatapp.domain.Ext.id
+import com.example.mychatapp.domain.ext.id
 import com.example.mychatapp.domain.model.Channel
 import com.example.mychatapp.presentation.navigation.Routes
 import com.example.mychatapp.ui.comp.AsyncImages

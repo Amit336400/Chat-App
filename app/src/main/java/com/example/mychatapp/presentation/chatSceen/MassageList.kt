@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.mychatapp.domain.Ext.currentUser
+import com.example.mychatapp.domain.ext.currentUser
 import com.example.mychatapp.domain.model.Channel
 
 @Composable
