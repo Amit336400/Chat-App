@@ -7,7 +7,7 @@ data class User(
     val email: String,
     val bio: String?,
     val gender: String?,
-    val imageUri: String? = null
+    var imageUri: String? = null
 ) {
     // Secondary constructor with specific default values
     constructor() : this(

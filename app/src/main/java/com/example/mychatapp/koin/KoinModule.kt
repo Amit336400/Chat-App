@@ -5,9 +5,11 @@ import com.example.mychatapp.data.DB.DataStoreUtil
 import com.example.mychatapp.domain.local.repo.PreferenceRepo
 import com.example.mychatapp.data.local.repoimpl.PreferenceRepoImpl
 import com.example.mychatapp.data.remote.ChannelRepoImpl
+import com.example.mychatapp.data.remote.StorageRepoImpl
 import com.example.mychatapp.domain.remote.UserRepo
 import com.example.mychatapp.data.remote.UserRepoImpl
 import com.example.mychatapp.domain.remote.ChannelRepo
+import com.example.mychatapp.domain.remote.StorageRepo
 import com.example.mychatapp.presentation.EditProfile.EditProfileViewModel
 import com.example.mychatapp.presentation.Login.LoginViewModel
 import com.example.mychatapp.presentation.chatSceen.ChatViewModel
@@ -31,13 +33,14 @@ val appModule = module {
     single<FirebaseFirestore> { Firebase.firestore }
     single<UserRepo> { UserRepoImpl(get()) }
     single<ChannelRepo> { ChannelRepoImpl(get()) }
+    single<StorageRepo> { StorageRepoImpl() }
 
 
 }
 
 val viewModel = module {
 
-    viewModel { EditProfileViewModel(get(),get()) }
+    viewModel { EditProfileViewModel(get(),get(),get()) }
     viewModel { LoginViewModel(get(),get()) }
     viewModel { NewChatViewModel(get (),get()) }
     viewModel { SplashViewModel(get ()) }

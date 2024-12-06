@@ -51,7 +51,6 @@ fun NewChatScreen(
                     UserCard(
                         user = user,
                         onClick = {
-                            Toast.makeText(context, "Click", Toast.LENGTH_SHORT).show()
                             chatViewModel.onUserSelected(
                                 otherUserId = user.id(),
                                 onChannelReady = {

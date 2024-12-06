@@ -1,7 +1,9 @@
 package com.example.mychatapp.presentation.EditProfile
 
+import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -53,11 +55,16 @@ fun EditProfileScreen(
     val pickMediaLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia()
     ) { uri ->
-        imageUri = uri?.toString()
+        if (uri != null){
+            imageUri = uri.toString()
+        }
+
     }
 
     TitleBarScaffold(title = "Edit Profile") {
-        Box(modifier = Modifier.fillMaxSize().padding(it)) {
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .padding(it)) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -70,9 +77,9 @@ fun EditProfileScreen(
                 Card() {
                     ProfileImagePicker(
                         defaultIconResId = R.drawable.person_24,
-                        imageUri = imageUri
+                        imageUri = if (imageUri == null) null else imageUri.toString()
                     ) {
-                        // pickMediaLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                        pickMediaLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
 
                     }
                 }

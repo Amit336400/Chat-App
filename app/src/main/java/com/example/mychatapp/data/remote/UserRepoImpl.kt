@@ -44,5 +44,10 @@ class UserRepoImpl @Inject constructor(
 
     }
 
+    override suspend fun saveUserImage(): String  {
+        return ""
+    }
+
+
 
 }
