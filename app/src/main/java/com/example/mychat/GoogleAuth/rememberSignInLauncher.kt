@@ -1,6 +1,5 @@
-package com.example.googleauth.data
+package com.example.mychat.GoogleAuth
 
-import GoogleSignInManager
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent

@@ -1,4 +1,4 @@
-package com.example.googleauth.data
+package com.example.mychat.GoogleAuth
 
 // AuthData.kt
 data class SignInResult(
