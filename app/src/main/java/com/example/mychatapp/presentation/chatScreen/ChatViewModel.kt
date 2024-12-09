@@ -1,4 +1,4 @@
-package com.example.mychatapp.presentation.chatSceen
+package com.example.mychatapp.presentation.chatScreen
 
 import com.example.mychatapp.domain.ext.currentUser
 import com.example.mychatapp.domain.model.Channel

@@ -12,7 +12,7 @@ import com.example.mychatapp.domain.remote.ChannelRepo
 import com.example.mychatapp.domain.remote.StorageRepo
 import com.example.mychatapp.presentation.editProfileScreen.EditProfileViewModel
 import com.example.mychatapp.presentation.loginScreen.LoginViewModel
-import com.example.mychatapp.presentation.chatSceen.ChatViewModel
+import com.example.mychatapp.presentation.chatScreen.ChatViewModel
 import com.example.mychatapp.presentation.homeScreen.HomeViewModel
 import com.example.mychatapp.presentation.newChatsScreen.NewChatViewModel
 import com.example.mychatapp.presentation.splashScreen.SplashViewModel

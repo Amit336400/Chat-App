@@ -1,4 +1,4 @@
-package com.example.mychatapp.presentation.chatSceen
+package com.example.mychatapp.presentation.chatScreen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

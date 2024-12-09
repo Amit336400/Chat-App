@@ -7,7 +7,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.example.mychatapp.presentation.editProfileScreen.EditProfileScreen
 import com.example.mychatapp.presentation.loginScreen.LoginScreen
-import com.example.mychatapp.presentation.chatSceen.ChatScreen
+import com.example.mychatapp.presentation.chatScreen.ChatScreen
 import com.example.mychatapp.presentation.homeScreen.Home
 import com.example.mychatapp.presentation.newChatsScreen.NewChatScreen
 import com.example.mychatapp.presentation.splashScreen.SplashScreen
@@ -43,10 +43,10 @@ fun BaseActivity.NavHostGraph() {
         }
 
         composable<Routes.ChatScreen> {
-            val channelId: Routes.ChatScreen = it.toRoute()
+            val route: Routes.ChatScreen = it.toRoute()
             ChatScreen(
                 navHostController = navHostController,
-                channelId = channelId.channelId,
+                channelId = route.channelId,
                 viewModel = koinBaseViewModel()
             )
         }

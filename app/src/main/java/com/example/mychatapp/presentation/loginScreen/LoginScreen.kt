@@ -1,6 +1,5 @@
 package com.example.mychatapp.presentation.loginScreen
 
-import com.example.mychatapp.googleAuth.GoogleSignInManager
 import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -31,9 +30,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.mychatapp.R
+import com.example.mychatapp.googleAuth.GoogleSignInManager
 import com.example.mychatapp.googleAuth.SignInResult
 import com.example.mychatapp.googleAuth.rememberGoogleSignInLauncher
-import com.example.mychatapp.R
 import com.example.mychatapp.presentation.navigation.Routes
 import com.example.mychatapp.ui.comp.CustomDialog
 import com.example.mychatapp.ui.comp.LoadingCPI
@@ -54,8 +54,6 @@ fun LoginScreen(
     var showDialog by remember { mutableStateOf(false) }
     var showDialogErrorMessage by remember { mutableStateOf("") }
 
-
-    // Google Sign-In launcher
     val launcher = rememberGoogleSignInLauncher(
         activity = activity,
         onSignInResult = { result ->
@@ -63,30 +61,38 @@ fun LoginScreen(
         }
     )
 
-    // Handle sign-in result and login logic
     LaunchedEffect(key1 = signInResult.success) {
-        if (signInResult.success) {
-            isLoading = false
-            val userGmail = Firebase.auth.currentUser?.email
-            if (userGmail != null) {
-                viewModel.loginBefore(
-                    email = userGmail,
-                    navHostController = navHostController,
-                )
-            }else{
+        if (!signInResult.success) {
+            showDialog = true
+            showDialogErrorMessage = signInResult.errorMessage ?: "Unknown Error"
+            return@LaunchedEffect
+        }
+        isLoading = false
+        val currentUser = Firebase.auth.currentUser
+
+        if (currentUser != null) {
+            val userEmail = currentUser.email
+            if (userEmail.isNullOrBlank()) {
                 showDialog = true
+                showDialogErrorMessage = "Email Not Found"
+            } else {
+                viewModel.checkIfUserExistsAndLogin(
+                    email = userEmail,
+                    navHostController = navHostController
+                )
             }
+        } else {
+            showDialog = true
+            showDialogErrorMessage = "User Not Found"
         }
     }
-    viewModel.taskState.whenError {
-        isLoading = false
-    }
+
 
     if (showDialog){
         CustomDialog(
             showDialog = showDialog,
-            title = "Email Not Found",
-            message ="Email not found , click Go To Login Page ",
+            title = "User Not Found",
+            message = "$showDialogErrorMessage , click Go To Login Page ",
             confirmButtonText = "Go To Login Page",
             onConfirm = {
                 navHostController.navigate(Routes.LoginScreen)

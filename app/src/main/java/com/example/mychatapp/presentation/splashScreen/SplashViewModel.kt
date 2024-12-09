@@ -24,10 +24,10 @@ class SplashViewModel @Inject constructor(
         execute(showLoadingDialog = false) {
             taskState.load {
 
-                val state = repo.getLoginState()
+                val isLoggedIn = repo.getLoginState()
 
                 withContext(Dispatchers.Main) {
-                    if (state){
+                    if (isLoggedIn){
                         navHostController.navigate(Routes.HomeScreen)
                     }
                     else{

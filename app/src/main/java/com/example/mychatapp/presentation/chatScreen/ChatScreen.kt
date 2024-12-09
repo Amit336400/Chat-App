@@ -1,4 +1,4 @@
-package com.example.mychatapp.presentation.chatSceen
+package com.example.mychatapp.presentation.chatScreen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -58,7 +58,7 @@ fun ChatScreen(
                     if (!it.messages.isNullOrEmpty()){
                         MassageList(it)
                     }else{
-                     CenterText(text = "Chat Is Empty")
+                        CenterText(text = "Chat Is Empty")
                     }
                 }
             }

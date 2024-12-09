@@ -23,7 +23,7 @@ class LoginViewModel @Inject constructor(
      */
     val taskState = taskStateOf<Unit>()
 
-    fun loginBefore(
+    fun checkIfUserExistsAndLogin(
         email: String,
         navHostController: NavHostController,
     ) {

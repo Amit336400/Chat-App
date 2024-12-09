@@ -39,7 +39,7 @@ fun Home(navHostController: NavHostController,viewModel: HomeViewModel) {
                     LoadingCPI(modifier = Modifier.fillMaxSize())
                 }
                 viewModel.channelsState.whenLoaded { listOfChannel ->
-                    ChannelCard(listOfChannel,navHostController)
+                    ChannelList(listOfChannel,navHostController)
                 }
             }
             FloatingActionButton(

@@ -1,4 +1,4 @@
-package com.example.mychatapp.presentation.chatSceen
+package com.example.mychatapp.presentation.chatScreen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,7 +19,7 @@ fun MassageList(channel: Channel) {
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         items(channel.messages) {
-            var selfSend = currentUser() == it.sender
+            val selfSend = currentUser() == it.sender
             Box(modifier =Modifier.fillMaxWidth(),
                 contentAlignment = if(selfSend) Alignment.BottomEnd else Alignment.CenterStart) {
 
