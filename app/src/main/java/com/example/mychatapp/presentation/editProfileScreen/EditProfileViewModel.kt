@@ -1,7 +1,7 @@
 package com.example.mychatapp.presentation.editProfileScreen
 
 import androidx.core.net.toUri
-import com.example.mychatapp.domain.ext.currentUser
+import com.example.mychatapp.domain.ext.currentUserId
 import com.example.mychatapp.domain.local.repo.PreferenceRepo
 import com.example.mychatapp.domain.remote.UserRepo
 import com.example.mychatapp.domain.model.User
@@ -30,7 +30,7 @@ class EditProfileViewModel @Inject constructor(
     ) {
         execute(showLoadingDialog = false) {
             saveProfileTask.load {
-              val imageUrl =   user.imageUri?.toUri()?.let { storageRepo.uploadFile(currentUser(), it) }
+              val imageUrl =   user.imageUri?.toUri()?.let { storageRepo.uploadFile(currentUserId(), it) }
                 user.imageUri = imageUrl
                 userRepo.saveUserData(user = user)
                 preferenceRepo.saveLoginState(true)

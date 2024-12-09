@@ -1,5 +1,5 @@
 package com.example.mychatapp.presentation.homeScreen
-import com.example.mychatapp.domain.ext.currentUser
+import com.example.mychatapp.domain.ext.currentUserId
 import com.example.mychatapp.domain.ext.id
 import com.example.mychatapp.domain.ext.imageUri
 import com.example.mychatapp.domain.model.Channel
@@ -22,11 +22,11 @@ class HomeViewModel @Inject constructor(
     fun start() {
         execute(showLoadingDialog = false) {
             val users = userRepo.getAllUser()
-            val channels = channelRepo.getAllChannels(currentUser = currentUser())
+            val channels = channelRepo.getAllChannels(currentUser = currentUserId())
                 .map { channel ->
                     if (channel.type == Channel.Type.OneToOne) {
 
-                        val otherUserId = channel.members.find { it != currentUser() }
+                        val otherUserId = channel.members.find { it != currentUserId() }
                             ?: error("Other User Id Not Found")
 
                         val otherUser = users.find {

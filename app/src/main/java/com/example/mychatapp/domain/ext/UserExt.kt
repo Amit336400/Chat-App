@@ -8,5 +8,5 @@ fun User.id() : String{
 }
 
 fun User.imageUri () : String{
-    return imageUri ?: placeHolder(name)
+    return this.imageUri ?: placeHolder(name)
 }

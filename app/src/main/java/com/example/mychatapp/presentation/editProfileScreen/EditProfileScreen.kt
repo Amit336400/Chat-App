@@ -37,7 +37,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mychatapp.R
-import com.example.mychatapp.domain.ext.currentUser
+import com.example.mychatapp.domain.ext.currentUserId
 import com.example.mychatapp.domain.model.Gender
 import com.example.mychatapp.domain.model.User
 import com.example.mychatapp.presentation.common.CustomEditText
@@ -207,7 +207,7 @@ fun EditProfileScreen(
                     onClick = {
                         if (name.isNotBlank()) {
                             val user = User(
-                                id = currentUser(),
+                                id = currentUserId(),
                                 name = name,
                                 email = email,
                                 bio = if (bio.isBlank()) null else bio,

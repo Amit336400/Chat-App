@@ -3,6 +3,6 @@ package com.example.mychatapp.domain.ext
 import com.example.mychatapp.domain.model.Channel
 
 
-fun Channel.id() : String{
-    return id ?: error("Channel Not Found")
+fun Channel.id(): String {
+    return this.id ?: error("Channel ID Not Found")
 }

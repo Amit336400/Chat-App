@@ -1,7 +1,7 @@
 package com.example.mychatapp.presentation.newChatsScreen
 
 import com.example.mychatapp.domain.remote.UserRepo
-import com.example.mychatapp.domain.ext.currentUser
+import com.example.mychatapp.domain.ext.currentUserId
 import com.example.mychatapp.domain.ext.id
 import com.example.mychatapp.domain.model.User
 import com.example.mychatapp.domain.remote.ChannelRepo
@@ -23,7 +23,7 @@ class NewChatViewModel @Inject constructor(
     fun fetchUsers() {
         execute(showLoadingDialog = false) {
             usersListTask.load {
-                userRepo.getAllUser().filter { it.id() != currentUser() }
+                userRepo.getAllUser().filter { it.id() != currentUserId() }
             }
         }
     }
@@ -34,11 +34,11 @@ class NewChatViewModel @Inject constructor(
 
         execute(showLoadingDialog = false) {
 
-            val channel = channelRepo.getOneToOneChat(currentUser(), otherUserId)
+            val channel = channelRepo.getOneToOneChat(currentUserId(), otherUserId)
             val channelId =  if (channel != null) {
                 channel.id()
             } else {
-                channelRepo.createOneToOneChannel(currentUser(),otherUserId)
+                channelRepo.createOneToOneChannel(currentUserId(),otherUserId)
             }
             executeOnMain {
                 onChannelReady(channelId)

@@ -1,6 +1,6 @@
 package com.example.mychatapp.presentation.chatScreen
 
-import com.example.mychatapp.domain.ext.currentUser
+import com.example.mychatapp.domain.ext.currentUserId
 import com.example.mychatapp.domain.model.Channel
 import com.example.mychatapp.domain.model.Message
 import com.example.mychatapp.domain.remote.ChannelRepo
@@ -33,7 +33,7 @@ class ChatViewModel(
     fun sendMessage(messageStr: String, channelId: String, onSuccess :() ->Unit) {
         val message = Message(
             message = messageStr,
-            sender = currentUser(),
+            sender = currentUserId(),
             mediaUrl = null
         )
 
