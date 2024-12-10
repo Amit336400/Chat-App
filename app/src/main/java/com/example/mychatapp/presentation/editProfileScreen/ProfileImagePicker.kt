@@ -1,4 +1,4 @@
-package com.example.mychatapp.ui.comp
+package com.example.mychatapp.presentation.editProfileScreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -11,30 +11,25 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import coil3.compose.rememberAsyncImagePainter
+import com.streamliners.pickers.media.PickedMedia
 
 
 @Composable
 fun ProfileImagePicker(
     defaultIconResId: Int, // Pass the default drawable resource ID
-    imageUri : String ? = null,
+    imageUri : PickedMedia ? = null,
     onImageUploadClick: () -> Unit // Callback to handle image upload clicks
 ) {
-    var selectedImageUri by remember { mutableStateOf<String?>(null) }
 
-    // UI Component
     if (imageUri != null) {
-        // Show selected image when URI is available
-        Image(
-            painter = rememberAsyncImagePainter(imageUri),
-            contentDescription = "Selected Profile Image",
-            modifier = Modifier
-                .size(100.dp)
-                .clip(CircleShape)
-                .clickable { onImageUploadClick() } // Open media picker again
-        )
+      AsyncImage(
+          modifier = Modifier.clickable { onImageUploadClick() }
+              .size(100.dp)
+              .clip(CircleShape),
+          model = imageUri.uri, contentDescription = null)
     } else {
-        // Show default camera icon
         Icon(
             painter = painterResource(id = defaultIconResId),
             contentDescription = "Upload Profile Image",

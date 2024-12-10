@@ -1,9 +1,6 @@
 package com.example.mychatapp.presentation.editProfileScreen
 
 import android.widget.Toast
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -32,6 +29,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,12 +43,21 @@ import com.example.mychatapp.domain.model.User
 import com.example.mychatapp.presentation.common.CustomEditText
 import com.example.mychatapp.presentation.navigation.Routes
 import com.example.mychatapp.ui.comp.CustomDialog
-import com.example.mychatapp.ui.comp.ProfileImagePicker
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
+import com.mr0xf00.easycrop.AspectRatio
+import com.mr0xf00.easycrop.rememberImageCropper
 import com.streamliners.base.taskState.comp.whenLoading
 import com.streamliners.compose.android.comp.appBar.TitleBarScaffold
+import com.streamliners.pickers.media.FromGalleryType
+import com.streamliners.pickers.media.MediaPickerCropParams
+import com.streamliners.pickers.media.MediaPickerDialog
+import com.streamliners.pickers.media.MediaPickerDialogState
+import com.streamliners.pickers.media.MediaType
+import com.streamliners.pickers.media.PickedMedia
+import com.streamliners.pickers.media.rememberMediaPickerDialogState
+import kotlinx.coroutines.launch
 
 @Composable
 fun EditProfileScreen(
@@ -66,19 +73,15 @@ fun EditProfileScreen(
     var bio by remember { mutableStateOf("") }
     var nameError by remember { mutableStateOf(false) }
     var bioError by remember { mutableStateOf(false) }
-    var imageUri by remember { mutableStateOf<String?>(null) }
+    var imageUri by remember { mutableStateOf<PickedMedia?>(null) }
     var selectedGender by remember { mutableStateOf<User.Gender?>(null) }
     var userUidNotFound by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
 
     // Gender options
     val genderOptions = User.Gender.entries.map { it.name }
-
-    // Media picker launcher
-    val pickMediaLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.PickVisualMedia()
-    ) { uri ->
-        imageUri = uri?.toString()
-    }
+    val mediaPickerDialogState = rememberMediaPickerDialogState()
+    val imageCropper = rememberImageCropper()
 
     // Check if user is authenticated
     LaunchedEffect(Unit) {
@@ -121,7 +124,26 @@ fun EditProfileScreen(
                         defaultIconResId = R.drawable.person_24,
                         imageUri = imageUri
                     ) {
-                        pickMediaLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                        mediaPickerDialogState.value = MediaPickerDialogState.ShowMediaPicker(
+                            type = MediaType.Image,
+                            allowMultiple = false,
+                            fromGalleryType = FromGalleryType.VisualMediaPicker,
+                            cropParams =
+                            MediaPickerCropParams.Enabled(
+                                showAspectRatioSelectionButton = false,
+                                showShapeCropButton = false,
+                                lockAspectRatio = AspectRatio(1, 1)
+                            ),
+                            callback = { getList ->
+                                scope.launch {
+                                    val list = getList()
+                                    list.firstOrNull()?.let {
+                                        imageUri = it
+                                    }
+                                }
+
+                            }
+                        )
                     }
                 }
 
@@ -230,7 +252,7 @@ fun EditProfileScreen(
                                 email = email,
                                 bio = bio.takeIf { it.isNotBlank() },
                                 gender = selectedGender,
-                                imageUri = imageUri
+                                imageUri = imageUri?.uri
                             )
 
                             viewModel.saveUser(
@@ -258,4 +280,9 @@ fun EditProfileScreen(
             }
         }
     }
+
+    MediaPickerDialog(
+        state = mediaPickerDialogState,
+        authority = "com.example.mychatapp.fileprovider"
+    )
 }
