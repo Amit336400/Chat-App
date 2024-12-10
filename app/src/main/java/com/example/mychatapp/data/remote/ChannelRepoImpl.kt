@@ -28,7 +28,7 @@ class ChannelRepoImpl @Inject constructor(
    .toObjects(Channel::class.java)
    .firstOrNull {
     it.members == listOf(currentUserId, otherUserId) ||
-            it.members == listOf(currentUserId, otherUserId)
+            it.members == listOf( otherUserId,currentUserId)
    }
  }
 
