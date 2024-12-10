@@ -66,8 +66,9 @@ fun LoginScreen(
             SignInWithGoogleButton(
                 modifier = Modifier,
                 onSuccess = {
-
-                    navHostController.navigate(Routes.EditProfileScreen)
+                    navHostController.navigate(Routes.EditProfileScreen){
+                        popUpTo(Routes.LoginScreen) { inclusive = true }
+                    }
                 },
                 onError = {
                     showDialog = true

@@ -99,7 +99,9 @@ fun EditProfileScreen(
                 val googleSignInClient =
                     GoogleSignIn.getClient(context, GoogleSignInOptions.DEFAULT_SIGN_IN)
                 googleSignInClient.signOut().addOnCompleteListener {
-                    navHostController.navigate(Routes.LoginScreen)
+                    navHostController.navigate(Routes.LoginScreen){
+                        popUpTo(Routes.EditProfileScreen) { inclusive = true }
+                    }
                 }
             }
         )

@@ -38,7 +38,7 @@ fun SplashScreen(
         scale.animateTo(
             targetValue = 0.3f, // Target scale (zoom-out)
             animationSpec = tween(
-                durationMillis = 1000, // Duration for the zoom-out animation
+                durationMillis = 2000, // Duration for the zoom-out animation
                 easing = FastOutSlowInEasing
             )
         )
