@@ -15,13 +15,12 @@ class UserRepoImpl @Inject constructor(
      * User data Save in the firebase database
      */
     override suspend fun saveUserData(user: User) {
-        user.id?.let {
-            firestore
-                .userCollection()
-                .document(it)
-                .set(user)
-                .await()
-        }
+        firestore
+            .userCollection()
+            .document(user.id)
+            .set(user)
+            .await()
+
     }
 
     /**
@@ -43,11 +42,4 @@ class UserRepoImpl @Inject constructor(
             .toObjects(User::class.java)
 
     }
-
-    override suspend fun saveUserImage(): String  {
-        return ""
-    }
-
-
-
 }
