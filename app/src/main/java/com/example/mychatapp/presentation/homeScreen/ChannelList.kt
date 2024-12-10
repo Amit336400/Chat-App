@@ -22,7 +22,7 @@ fun ChannelList(listOfChannel: List<Channel>, navHostController: NavHostControll
         verticalArrangement = Arrangement.spacedBy(1.dp)
     ) {
 
-        if (listOfChannel.isNullOrEmpty()) {
+        if (listOfChannel.isEmpty()) {
             item() {
                 CenterText(text = "Empty...")
             }
@@ -31,6 +31,5 @@ fun ChannelList(listOfChannel: List<Channel>, navHostController: NavHostControll
                 ChannelCard(channel,navHostController)
             }
         }
-
     }
 }

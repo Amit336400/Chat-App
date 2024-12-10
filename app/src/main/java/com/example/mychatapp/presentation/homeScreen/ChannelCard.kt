@@ -60,5 +60,4 @@ fun ChannelCard(channel: Channel, navHostController: NavHostController) {
             }
         }
     }
-
 }
