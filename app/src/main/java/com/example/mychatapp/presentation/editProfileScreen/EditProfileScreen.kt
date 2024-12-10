@@ -35,7 +35,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.autofill.AutofillType
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -63,7 +62,7 @@ fun EditProfileScreen(
 
     // ViewModel states
     var name by remember { mutableStateOf(auth.currentUser?.displayName.orEmpty()) }
-    var email by remember { mutableStateOf(auth.currentUser?.email.orEmpty()) }
+    val email by remember { mutableStateOf(auth.currentUser?.email.orEmpty()) }
     var bio by remember { mutableStateOf("") }
     var nameError by remember { mutableStateOf(false) }
     var bioError by remember { mutableStateOf(false) }
@@ -103,10 +102,10 @@ fun EditProfileScreen(
         )
     }
 
-    TitleBarScaffold(title = "Edit Profile") {
+    TitleBarScaffold(title = "Edit Profile") { padding ->
         Box(modifier = Modifier
             .fillMaxSize()
-            .padding(it)
+            .padding(padding)
         ) {
             Column(
                 modifier = Modifier
