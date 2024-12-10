@@ -4,9 +4,11 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,6 +25,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,13 +35,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.autofill.AutofillType
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mychatapp.R
 import com.example.mychatapp.domain.ext.currentUserId
-import com.example.mychatapp.domain.model.Gender
 import com.example.mychatapp.domain.model.User
 import com.example.mychatapp.presentation.common.CustomEditText
 import com.example.mychatapp.presentation.navigation.Routes
@@ -46,9 +49,7 @@ import com.example.mychatapp.ui.comp.CustomDialog
 import com.example.mychatapp.ui.comp.ProfileImagePicker
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
 import com.streamliners.base.taskState.comp.whenLoading
 import com.streamliners.compose.android.comp.appBar.TitleBarScaffold
 
@@ -60,41 +61,37 @@ fun EditProfileScreen(
     val context = LocalContext.current
     val auth = FirebaseAuth.getInstance()
 
-    // Using ViewModel to manage states properly
-    var name by remember { mutableStateOf("${auth.currentUser?.displayName}") }
-    var email by remember { mutableStateOf("${auth.currentUser?.email}") }
+    // ViewModel states
+    var name by remember { mutableStateOf(auth.currentUser?.displayName.orEmpty()) }
+    var email by remember { mutableStateOf(auth.currentUser?.email.orEmpty()) }
     var bio by remember { mutableStateOf("") }
     var nameError by remember { mutableStateOf(false) }
     var bioError by remember { mutableStateOf(false) }
     var imageUri by remember { mutableStateOf<String?>(null) }
+    var selectedGender by remember { mutableStateOf<User.Gender?>(null) }
+    var userUidNotFound by remember { mutableStateOf(false) }
 
-    var userUidNotFound by remember { mutableStateOf<Boolean>(false) }
+    // Gender options
+    val genderOptions = User.Gender.entries.map { it.name }
 
-
-    // Gender state
-    var selectedGender by remember { mutableStateOf<String?>(null) }
-    val genderOptions = Gender.values().map { it.name } // Convert enum to list of strings
-
-    // Media picker for profile image
+    // Media picker launcher
     val pickMediaLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia()
     ) { uri ->
-        if (uri != null){
-            imageUri = uri.toString()
-        }
-
+        imageUri = uri?.toString()
     }
 
-    LaunchedEffect(key1 = Unit) {
-        val currentUser = Firebase.auth.currentUser
-        userUidNotFound = currentUser?.uid.isNullOrEmpty()
+    // Check if user is authenticated
+    LaunchedEffect(Unit) {
+        userUidNotFound = auth.currentUser?.uid.isNullOrEmpty()
     }
 
+    // Show dialog if user UID is not found
     if (userUidNotFound) {
         CustomDialog(
-            showDialog = userUidNotFound,
-            title = "Login Failed ",
-            message = "Please Login Again",
+            showDialog = true,
+            title = "Login Failed",
+            message = "Please log in again.",
             confirmButtonText = "Retry",
             onConfirm = {
                 val googleSignInClient =
@@ -102,13 +99,15 @@ fun EditProfileScreen(
                 googleSignInClient.signOut().addOnCompleteListener {
                     navHostController.navigate(Routes.LoginScreen)
                 }
-            })
+            }
+        )
     }
 
     TitleBarScaffold(title = "Edit Profile") {
         Box(modifier = Modifier
             .fillMaxSize()
-            .padding(it)) {
+            .padding(it)
+        ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -117,20 +116,19 @@ fun EditProfileScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top
             ) {
-                // Profile image area
-                Card() {
+                // Profile image picker
+                Card {
                     ProfileImagePicker(
                         defaultIconResId = R.drawable.person_24,
-                        imageUri = if (imageUri == null) null else imageUri.toString()
+                        imageUri = imageUri
                     ) {
                         pickMediaLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-
                     }
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Name Input
+                // Name input
                 CustomEditText(
                     modifier = Modifier.fillMaxWidth(),
                     value = name,
@@ -142,34 +140,28 @@ fun EditProfileScreen(
                     isError = nameError,
                     maxLines = 1,
                     leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Default.Person,
-                            contentDescription = null
-                        )
+                        Icon(imageVector = Icons.Default.Person, contentDescription = null)
                     },
                     errorMessage = "Name is required"
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // Display email (disabled)
+                // Email display (read-only)
                 CustomEditText(
                     modifier = Modifier.fillMaxWidth(),
                     value = email,
-                    onValueChange = { /* No-op */ },
+                    onValueChange = {},
                     label = "Email",
                     leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Default.Email,
-                            contentDescription = null
-                        )
+                        Icon(imageVector = Icons.Default.Email, contentDescription = null)
                     },
                     enabled = false
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // Bio Input
+                // Bio input
                 CustomEditText(
                     modifier = Modifier.fillMaxWidth(),
                     value = bio,
@@ -180,27 +172,54 @@ fun EditProfileScreen(
                     label = "Bio",
                     isError = bioError,
                     maxLines = 3,
-                    leadingIcon = { Icon(imageVector = Icons.Default.Edit, contentDescription = null) },
+                    leadingIcon = {
+                        Icon(imageVector = Icons.Default.Edit, contentDescription = null)
+                    },
                     errorMessage = "Bio is required"
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Gender Selection
-                Column {
-                    Text(text = "Gender")
+                // Gender selection
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp)
+                ) {
+                    Text(text = "Gender", modifier = Modifier.padding(bottom = 8.dp))
 
-                    // Iterate through gender options (strings)
-                    genderOptions.forEach { gender ->
-                        GenderButton(gender = gender, isSelected = selectedGender) {
-                            selectedGender = gender
+                    genderOptions.forEach { genderName ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 4.dp)
+                                .clickable {
+                                    selectedGender = User.Gender.valueOf(genderName)
+                                },
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            // Radio Button
+                            RadioButton(
+                                selected = selectedGender?.name == genderName,
+                                onClick = {
+                                    selectedGender = User.Gender.valueOf(genderName)
+                                }
+                            )
+
+                            // Gender Label
+                            Text(
+                                text = genderName,
+                                modifier = Modifier.padding(start = 8.dp),
+                                color = if (selectedGender?.name == genderName) Color.Cyan else Color.Black
+                            )
                         }
                     }
                 }
 
+
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Save Button with validation
+                // Save button
                 ElevatedButton(
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.Cyan),
@@ -210,20 +229,22 @@ fun EditProfileScreen(
                                 id = currentUserId(),
                                 name = name,
                                 email = email,
-                                bio = if (bio.isBlank()) null else bio,
+                                bio = bio.takeIf { it.isNotBlank() },
                                 gender = selectedGender,
                                 imageUri = imageUri
                             )
 
-                            viewModel.saveUser(user,
+                            viewModel.saveUser(
+                                user,
                                 onSuccess = {
                                     Toast.makeText(
                                         context,
-                                        "Profile Saved Successfully",
+                                        "Profile Create successfully.",
                                         Toast.LENGTH_SHORT
                                     ).show()
                                     navHostController.navigate(Routes.HomeScreen)
-                                })
+                                },
+                            )
                         } else {
                             nameError = true
                         }
@@ -238,8 +259,4 @@ fun EditProfileScreen(
             }
         }
     }
-
-
 }
-
-
