@@ -31,7 +31,7 @@ fun NewChatScreen(
         chatViewModel.fetchUsers()
     }
     TitleBarScaffold(title = "New Chat", navigateUp = {
-        navHostController.navigate(Routes.HomeScreen)
+        navHostController.navigateUp()
     }) {
 
         chatViewModel.usersListTask.whenLoaded { userList ->

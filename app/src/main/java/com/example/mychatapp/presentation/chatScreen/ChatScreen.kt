@@ -35,7 +35,7 @@ fun ChatScreen(
     }
 
     TitleBarScaffold(title = "Chat",navigateUp = {
-        navHostController.navigate(Routes.HomeScreen)
+        navHostController.navigateUp()
     }) {
         Column(
             modifier = Modifier
