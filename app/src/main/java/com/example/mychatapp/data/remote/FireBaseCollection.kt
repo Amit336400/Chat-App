@@ -5,7 +5,7 @@ import com.google.firebase.storage.StorageReference
 
 object FireBaseCollection {
     fun FirebaseFirestore.userCollection () =  collection("users")
-     fun  FirebaseFirestore.userChannel () = collection("channel")
+    fun  FirebaseFirestore.userChannel () = collection("channel")
 
 }
 
