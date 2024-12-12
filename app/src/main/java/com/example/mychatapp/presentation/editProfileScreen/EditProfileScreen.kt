@@ -265,7 +265,9 @@ fun EditProfileScreen(
                                         "Profile Create successfully.",
                                         Toast.LENGTH_SHORT
                                     ).show()
-                                    navHostController.navigate(Routes.HomeScreen)
+                                    navHostController.navigate(Routes.HomeScreen) {
+                                        popUpTo(Routes.EditProfileScreen) { inclusive = true }
+                                    }
                                 },
                             )
                         } else {

@@ -66,8 +66,11 @@ fun LoginScreen(
             SignInWithGoogleButton(
                 modifier = Modifier,
                 onSuccess = {
-                    navHostController.navigate(Routes.EditProfileScreen){
-                        popUpTo(Routes.LoginScreen) { inclusive = true }
+                    if (it.email != null){
+                        viewModel.checkIfUserExistsAndLogin(it.email!!,navHostController)
+                    }else{
+                        showDialog = true
+                        showDialogErrorMessage =  "Email Not Found"
                     }
                 },
                 onError = {
