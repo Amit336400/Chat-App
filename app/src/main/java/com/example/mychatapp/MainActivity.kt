@@ -22,6 +22,7 @@ class MainActivity: BaseActivity(){
                 UiEventDialogs()
                 NavHostGraph()
 
+
             }
         }
     }

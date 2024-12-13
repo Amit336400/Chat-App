@@ -30,7 +30,7 @@ class EditProfileViewModel @Inject constructor(
     ) {
         execute(showLoadingDialog = false) {
             saveProfileTask.load {
-                val imageUrl =   user.imageUri?.toUri()?.let { storageRepo.uploadFile(currentUserId(), it) }
+                val imageUrl =   user.imageUri?.toUri()?.let { storageRepo.uploadFile("profileImages/${currentUserId()}", it) }
                 val updatedUser = user.copy(imageUri = imageUrl)
                 userRepo.saveUserData(user = updatedUser)
                 preferenceRepo.saveLoginState(true)

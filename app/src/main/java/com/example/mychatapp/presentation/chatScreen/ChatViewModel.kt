@@ -22,7 +22,7 @@ class ChatViewModel(
         ) {
             launch {
                 repo.getChannelWithFlowMessage(channelId).collectLatest {
-                    channel.update(repo.getChannel(channelId))
+                    channel.update(it)
                 }
             }
 

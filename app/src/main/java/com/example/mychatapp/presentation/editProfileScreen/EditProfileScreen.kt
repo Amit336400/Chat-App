@@ -43,6 +43,7 @@ import com.example.mychatapp.domain.model.User
 import com.example.mychatapp.presentation.common.CustomEditText
 import com.example.mychatapp.presentation.navigation.Routes
 import com.example.mychatapp.ui.comp.CustomDialog
+import com.example.mychatapp.ui.comp.ProfileImagePicker
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
@@ -57,6 +58,7 @@ import com.streamliners.pickers.media.MediaPickerDialogState
 import com.streamliners.pickers.media.MediaType
 import com.streamliners.pickers.media.PickedMedia
 import com.streamliners.pickers.media.rememberMediaPickerDialogState
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Composable
@@ -81,7 +83,6 @@ fun EditProfileScreen(
     // Gender options
     val genderOptions = User.Gender.entries.map { it.name }
     val mediaPickerDialogState = rememberMediaPickerDialogState()
-    val imageCropper = rememberImageCropper()
 
     // Check if user is authenticated
     LaunchedEffect(Unit) {
@@ -124,7 +125,7 @@ fun EditProfileScreen(
                 Card {
                     ProfileImagePicker(
                         defaultIconResId = R.drawable.person_24,
-                        imageUri = imageUri
+                        imagePickMedia = imageUri
                     ) {
                         mediaPickerDialogState.value = MediaPickerDialogState.ShowMediaPicker(
                             type = MediaType.Image,
@@ -137,13 +138,14 @@ fun EditProfileScreen(
                                 lockAspectRatio = AspectRatio(1, 1)
                             ),
                             callback = { getList ->
-                                scope.launch {
+                                scope.launch(
+                                    Dispatchers.IO
+                                ) {
                                     val list = getList()
                                     list.firstOrNull()?.let {
                                         imageUri = it
                                     }
                                 }
-
                             }
                         )
                     }

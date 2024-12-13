@@ -11,6 +11,7 @@ import com.example.mychatapp.presentation.chatScreen.ChatScreen
 import com.example.mychatapp.presentation.homeScreen.Home
 import com.example.mychatapp.presentation.newChatsScreen.NewChatScreen
 import com.example.mychatapp.presentation.splashScreen.SplashScreen
+import com.example.mychatapp.presentation.userProfileScreen.UserProfileScreen
 import com.streamliners.base.BaseActivity
 import com.streamliners.base.ext.koinBaseViewModel
 
@@ -50,5 +51,10 @@ fun BaseActivity.NavHostGraph() {
                 viewModel = koinBaseViewModel()
             )
         }
+        composable<Routes.UserProfileScreen> {
+
+            UserProfileScreen(navHostController = navHostController, viewModel = koinBaseViewModel())
+        }
+
     }
 }

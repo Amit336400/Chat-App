@@ -16,6 +16,7 @@ import com.example.mychatapp.presentation.chatScreen.ChatViewModel
 import com.example.mychatapp.presentation.homeScreen.HomeViewModel
 import com.example.mychatapp.presentation.newChatsScreen.NewChatViewModel
 import com.example.mychatapp.presentation.splashScreen.SplashViewModel
+import com.example.mychatapp.presentation.userProfileScreen.UserProfileViewModel
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -46,6 +47,7 @@ val viewModel = module {
     viewModel { SplashViewModel(get ()) }
     viewModel { HomeViewModel(get (),get()) }
     viewModel { ChatViewModel(get ()) }
+    viewModel { UserProfileViewModel(get ()) }
 
 }
 

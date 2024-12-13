@@ -24,7 +24,7 @@ class LoginViewModel @Inject constructor(
         email: String,
         navHostController: NavHostController,
     ) {
-        execute {
+        execute (showLoadingDialog = false){
             val user = repo.getUserWithEmail(email)
 
             executeOnMain {

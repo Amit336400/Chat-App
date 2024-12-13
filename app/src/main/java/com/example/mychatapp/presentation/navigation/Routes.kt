@@ -21,6 +21,9 @@ object Routes {
     object NewChatScreen
 
     @Serializable
+    object UserProfileScreen
+
+    @Serializable
     data class ChatScreen(val channelId : String)
 
 }
